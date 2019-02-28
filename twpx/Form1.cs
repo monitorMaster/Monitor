@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using twpx.Dao;
+using twpx.Model;
 
 namespace twpx
 {
@@ -15,6 +18,8 @@ namespace twpx
         public Form1()
         {
             InitializeComponent();
+            SqlSugarClient db = SugarDao.GetInstance();
+            var list = db.Queryable<Device>().ToList();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -78,6 +83,23 @@ namespace twpx
         private void pictureBox4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 设备管理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new Devices();
+            frm.Show();
+        }
+
+        private void 监控预览ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new Screen();
+            frm.Show();
         }
     }
 }

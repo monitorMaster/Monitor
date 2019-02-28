@@ -65,6 +65,8 @@
             this.标记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.一键报警ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.设备管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.监控预览ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -105,7 +107,9 @@
             this.用户管理ToolStripMenuItem,
             this.监控管理ToolStripMenuItem,
             this.电子地图ToolStripMenuItem,
-            this.一键报警ToolStripMenuItem});
+            this.一键报警ToolStripMenuItem,
+            this.设备管理ToolStripMenuItem,
+            this.监控预览ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1010, 28);
@@ -133,7 +137,7 @@
             this.刷新ToolStripMenuItem1,
             this.退出ToolStripMenuItem});
             this.用户管理ToolStripMenuItem1.Name = "用户管理ToolStripMenuItem1";
-            this.用户管理ToolStripMenuItem1.Size = new System.Drawing.Size(216, 26);
+            this.用户管理ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.用户管理ToolStripMenuItem1.Text = "用户管理";
             // 
             // ToolStripMenuItem1
@@ -165,14 +169,14 @@
             this.刷新ToolStripMenuItem2,
             this.退出ToolStripMenuItem1});
             this.设备管理ToolStripMenuItem1.Name = "设备管理ToolStripMenuItem1";
-            this.设备管理ToolStripMenuItem1.Size = new System.Drawing.Size(216, 26);
+            this.设备管理ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.设备管理ToolStripMenuItem1.Text = "设备管理";
             // 
             // 打开ToolStripMenuItem2
             // 
             this.打开ToolStripMenuItem2.Name = "打开ToolStripMenuItem2";
             this.打开ToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D4)));
-            this.打开ToolStripMenuItem2.Size = new System.Drawing.Size(216, 26);
+            this.打开ToolStripMenuItem2.Size = new System.Drawing.Size(164, 26);
             this.打开ToolStripMenuItem2.Text = "打开";
             this.打开ToolStripMenuItem2.Click += new System.EventHandler(this.打开ToolStripMenuItem2_Click);
             // 
@@ -180,14 +184,14 @@
             // 
             this.刷新ToolStripMenuItem2.Name = "刷新ToolStripMenuItem2";
             this.刷新ToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D5)));
-            this.刷新ToolStripMenuItem2.Size = new System.Drawing.Size(216, 26);
+            this.刷新ToolStripMenuItem2.Size = new System.Drawing.Size(164, 26);
             this.刷新ToolStripMenuItem2.Text = "刷新";
             // 
             // 退出ToolStripMenuItem1
             // 
             this.退出ToolStripMenuItem1.Name = "退出ToolStripMenuItem1";
             this.退出ToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D6)));
-            this.退出ToolStripMenuItem1.Size = new System.Drawing.Size(216, 26);
+            this.退出ToolStripMenuItem1.Size = new System.Drawing.Size(164, 26);
             this.退出ToolStripMenuItem1.Text = "退出";
             // 
             // 监控管理ToolStripMenuItem1
@@ -197,7 +201,7 @@
             this.刷新ToolStripMenuItem3,
             this.退出ToolStripMenuItem2});
             this.监控管理ToolStripMenuItem1.Name = "监控管理ToolStripMenuItem1";
-            this.监控管理ToolStripMenuItem1.Size = new System.Drawing.Size(216, 26);
+            this.监控管理ToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.监控管理ToolStripMenuItem1.Text = "监控管理";
             // 
             // 打开ToolStripMenuItem3
@@ -264,7 +268,7 @@
             this.刷新ToolStripMenuItem4,
             this.返回ToolStripMenuItem});
             this.主页面监控ToolStripMenuItem.Name = "主页面监控ToolStripMenuItem";
-            this.主页面监控ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.主页面监控ToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.主页面监控ToolStripMenuItem.Text = "主页面监控";
             // 
             // 打开ToolStripMenuItem4
@@ -296,7 +300,7 @@
             this.刷新ToolStripMenuItem5,
             this.返回ToolStripMenuItem1});
             this.监控列表ToolStripMenuItem.Name = "监控列表ToolStripMenuItem";
-            this.监控列表ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.监控列表ToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.监控列表ToolStripMenuItem.Text = "监控列表";
             // 
             // 打开ToolStripMenuItem5
@@ -327,7 +331,7 @@
             this.刷新ToolStripMenuItem6,
             this.返回ToolStripMenuItem2});
             this.多窗口监控ToolStripMenuItem.Name = "多窗口监控ToolStripMenuItem";
-            this.多窗口监控ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.多窗口监控ToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.多窗口监控ToolStripMenuItem.Text = "多窗口监控";
             // 
             // 打开ToolStripMenuItem6
@@ -368,21 +372,21 @@
             // 
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
             this.打开ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.打开ToolStripMenuItem.Text = "打开";
             // 
             // 标记ToolStripMenuItem
             // 
             this.标记ToolStripMenuItem.Name = "标记ToolStripMenuItem";
             this.标记ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.标记ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.标记ToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.标记ToolStripMenuItem.Text = "标记";
             // 
             // 刷新ToolStripMenuItem
             // 
             this.刷新ToolStripMenuItem.Name = "刷新ToolStripMenuItem";
             this.刷新ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.刷新ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.刷新ToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.刷新ToolStripMenuItem.Text = "刷新";
             // 
             // 一键报警ToolStripMenuItem
@@ -394,6 +398,20 @@
             this.一键报警ToolStripMenuItem.Name = "一键报警ToolStripMenuItem";
             this.一键报警ToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
             this.一键报警ToolStripMenuItem.Text = "一键报警";
+            // 
+            // 设备管理ToolStripMenuItem
+            // 
+            this.设备管理ToolStripMenuItem.Name = "设备管理ToolStripMenuItem";
+            this.设备管理ToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.设备管理ToolStripMenuItem.Text = "设备管理";
+            this.设备管理ToolStripMenuItem.Click += new System.EventHandler(this.设备管理ToolStripMenuItem_Click);
+            // 
+            // 监控预览ToolStripMenuItem
+            // 
+            this.监控预览ToolStripMenuItem.Name = "监控预览ToolStripMenuItem";
+            this.监控预览ToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.监控预览ToolStripMenuItem.Text = "监控预览";
+            this.监控预览ToolStripMenuItem.Click += new System.EventHandler(this.监控预览ToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
@@ -467,6 +485,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "杭电智慧实验室监控系统";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -521,6 +540,8 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox8;
+        private System.Windows.Forms.ToolStripMenuItem 设备管理ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 监控预览ToolStripMenuItem;
     }
 }
 

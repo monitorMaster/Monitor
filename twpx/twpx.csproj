@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=8.0.14.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="SqlSugar, Version=4.9.9.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\sqlSugar.4.9.9.1\lib\SqlSugar.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Messaging" />
@@ -47,6 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dao\SugerDao.cs" />
+    <Compile Include="Devices.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Devices.Designer.cs">
+      <DependentUpon>Devices.cs</DependentUpon>
+    </Compile>
     <Compile Include="Find.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,14 +82,24 @@
     <Compile Include="Manage2.Designer.cs">
       <DependentUpon>Manage2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Device.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screen.Designer.cs">
+      <DependentUpon>Screen.cs</DependentUpon>
+    </Compile>
     <Compile Include="View1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View1.Designer.cs">
       <DependentUpon>View1.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Devices.resx">
+      <DependentUpon>Devices.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Find.resx">
       <DependentUpon>Find.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,9 +122,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Screen.resx">
+      <DependentUpon>Screen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View1.resx">
       <DependentUpon>View1.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
