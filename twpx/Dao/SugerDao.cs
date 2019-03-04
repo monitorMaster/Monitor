@@ -13,7 +13,7 @@ namespace twpx.Dao
         {
             get
             {
-                string reval = "server=localhost;uid=root;pwd=root;database=video";
+                string reval = "server=localhost;uid=root;pwd=Gl@956788752;database=video";
                 return reval;
             }
         }

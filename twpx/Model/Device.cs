@@ -33,6 +33,24 @@ namespace twpx.Model
             get;
             set;
         }
+        public string status = "离线";
+        
+        public void setStatus()
+        {
+            if (status.Equals("离线"))
+            {
+                this.status = "在线";
+            }
+            else
+            {
+                this.status = "离线";
+            }
+        }
+
+        public string getStatus()
+        {
+            return status;
+        }
 
     }
 }

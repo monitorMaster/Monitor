@@ -10,14 +10,31 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using twpx.Dao;
 using twpx.Model;
+using NVRCsharpDemo;
 
 namespace twpx
 {
     public partial class Form1 : Form
     {
+
+        public bool m_bInitSDK = false;
+
         public Form1()
         {
             InitializeComponent();
+            m_bInitSDK = CHCNetSDK.NET_DVR_Init();//返回bool类型
+            if (m_bInitSDK == false)
+            {
+                MessageBox.Show("NET_DVR_Init error!");
+                Console.WriteLine("NET_DVR_Init error!");
+                return;
+            }
+            else
+            {
+                //保存SDK日志 To save the SDK log
+                CHCNetSDK.NET_DVR_SetLogToFile(3, "D:\\SdkLog\\", true);
+
+            }
             SqlSugarClient db = SugarDao.GetInstance();
             var list = db.Queryable<Device>().ToList();
         }
@@ -100,6 +117,16 @@ namespace twpx
         {
             var frm = new Screen();
             frm.Show();
+        }
+
+        private void 用户管理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 设备管理ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

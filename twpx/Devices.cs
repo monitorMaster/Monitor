@@ -10,23 +10,76 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using twpx.Dao;
 using twpx.Model;
+using NVRCsharpDemo;
 
 namespace twpx
 {
+    
     public partial class Devices : Form
     {
         SqlSugarClient db = SugarDao.GetInstance();
+        Common Dcommon = new Common();
         public Devices()
         {
             InitializeComponent();
             LoadData();
         }
 
+        //登录、注销设备
         private void button4_Click(object sender, EventArgs e)
         {
+            
+            string ip;//存储ip
+            int count = 0;//存储得到链表中确定设备的位置
+            if (listView1.SelectedItems.Count == 0) return;
+            else
+            {
+                int selectCount = this.listView1.SelectedItems.Count;
+                Camera camera = null;
+                for(int i=0; i<selectCount; i++)
+                {
+                    ip = this.listView1.SelectedItems[i].SubItems[5].Text;
+                    if (ip.Equals("离线"))//如果设备离线就登录
+                    {
+                        camera = new Camera(this.listView1.SelectedItems[i].SubItems[1].Text,
+                        Convert.ToInt16(this.listView1.SelectedItems[i].SubItems[2].Text),
+                        this.listView1.SelectedItems[i].SubItems[3].Text,
+                        this.listView1.SelectedItems[i].SubItems[4].Text);
+                        try
+                        {
+                            Dcommon.addCL(camera);
+                            this.listView1.SelectedItems[i].SubItems[5].Text = "在线";
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                    else//设备在线就注销
+                    {
+                        count = Dcommon.getCamera(this.listView1.SelectedItems[i].SubItems[1].Text);
+                        try
+                        {
+                            Dcommon.removeCLByI(count - 1);
+                            this.listView1.SelectedItems[i].SubItems[5].Text = "离线";
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        
+                    }
 
+                    camera = null;
+                    //把新建的对象登录，修改状态
+                }
+                
+            }
+            
         }
 
+
+        //添加设备
         private void button1_Click(object sender, EventArgs e)
         {
             string ip = textBox1.Text.Trim();
@@ -75,6 +128,7 @@ namespace twpx
                 item.SubItems.Add(i.port);
                 item.SubItems.Add(i.user);
                 item.SubItems.Add(i.pwd);
+                item.SubItems.Add(i.getStatus());
                 listView1.Items.Add(item);
             }
         }
@@ -101,6 +155,18 @@ namespace twpx
                 var t4 = db.Deleteable<Device>().In(ids).ExecuteCommand();
                 Console.WriteLine("移除{0}个设备。",t4);
             }
+        }
+
+        //更新设备
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //批量导入设备
+        private void button6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

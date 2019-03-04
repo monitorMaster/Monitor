@@ -75,10 +75,10 @@
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button1.ImageKey = "(无)";
-            this.button1.Location = new System.Drawing.Point(230, 22);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.button1.Location = new System.Drawing.Point(259, 26);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 50);
+            this.button1.Size = new System.Drawing.Size(56, 60);
             this.button1.TabIndex = 0;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -88,9 +88,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(212, 77);
+            this.label1.Location = new System.Drawing.Point(238, 92);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 11);
+            this.label1.Size = new System.Drawing.Size(98, 14);
             this.label1.TabIndex = 1;
             this.label1.Text = "开始/停止录像";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -101,10 +101,10 @@
             this.button2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2.BackgroundImage")));
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button2.ImageKey = "(无)";
-            this.button2.Location = new System.Drawing.Point(861, 22);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.button2.Location = new System.Drawing.Point(969, 26);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(50, 50);
+            this.button2.Size = new System.Drawing.Size(56, 60);
             this.button2.TabIndex = 0;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button1_Click);
@@ -114,9 +114,9 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label2.Location = new System.Drawing.Point(431, 78);
+            this.label2.Location = new System.Drawing.Point(485, 94);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 11);
+            this.label2.Size = new System.Drawing.Size(63, 14);
             this.label2.TabIndex = 1;
             this.label2.Text = "返回上次";
             // 
@@ -125,10 +125,10 @@
             this.button3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button3.BackgroundImage")));
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button3.ImageKey = "(无)";
-            this.button3.Location = new System.Drawing.Point(646, 22);
-            this.button3.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.button3.Location = new System.Drawing.Point(727, 26);
+            this.button3.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(50, 50);
+            this.button3.Size = new System.Drawing.Size(56, 60);
             this.button3.TabIndex = 0;
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button1_Click);
@@ -138,9 +138,9 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Location = new System.Drawing.Point(657, 78);
+            this.label3.Location = new System.Drawing.Point(739, 94);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 11);
+            this.label3.Size = new System.Drawing.Size(35, 14);
             this.label3.TabIndex = 1;
             this.label3.Text = "截图";
             // 
@@ -149,10 +149,10 @@
             this.button4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button4.BackgroundImage")));
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button4.ImageKey = "(无)";
-            this.button4.Location = new System.Drawing.Point(433, 22);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.button4.Location = new System.Drawing.Point(487, 26);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(50, 50);
+            this.button4.Size = new System.Drawing.Size(56, 60);
             this.button4.TabIndex = 0;
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button1_Click);
@@ -162,9 +162,9 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label4.Location = new System.Drawing.Point(846, 78);
+            this.label4.Location = new System.Drawing.Point(952, 94);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 11);
+            this.label4.Size = new System.Drawing.Size(91, 14);
             this.label4.TabIndex = 1;
             this.label4.Text = "退出当前界面";
             this.label4.Click += new System.EventHandler(this.label4_Click);
@@ -172,10 +172,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(194, 10);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox1.Location = new System.Drawing.Point(218, 12);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(758, 88);
+            this.pictureBox1.Size = new System.Drawing.Size(853, 106);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -185,33 +185,34 @@
             this.预览选择.BackColor = System.Drawing.SystemColors.Menu;
             this.预览选择.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.预览选择.FormattingEnabled = true;
-            this.预览选择.ItemHeight = 15;
-            this.预览选择.Location = new System.Drawing.Point(6, 9);
-            this.预览选择.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.预览选择.ItemHeight = 18;
+            this.预览选择.Location = new System.Drawing.Point(7, 11);
+            this.预览选择.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.预览选择.Name = "预览选择";
             this.预览选择.ScrollAlwaysVisible = true;
-            this.预览选择.Size = new System.Drawing.Size(140, 617);
+            this.预览选择.Size = new System.Drawing.Size(157, 740);
             this.预览选择.TabIndex = 4;
             this.预览选择.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(11, 50);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox2.Location = new System.Drawing.Point(12, 60);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox2.Size = new System.Drawing.Size(111, 60);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 5;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(11, 118);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox3.Location = new System.Drawing.Point(12, 142);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox3.Size = new System.Drawing.Size(111, 60);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 5;
             this.pictureBox3.TabStop = false;
@@ -219,10 +220,10 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(11, 187);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox4.Location = new System.Drawing.Point(12, 224);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox4.Size = new System.Drawing.Size(111, 60);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox4.TabIndex = 5;
             this.pictureBox4.TabStop = false;
@@ -230,10 +231,10 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(11, 255);
-            this.pictureBox5.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox5.Location = new System.Drawing.Point(12, 306);
+            this.pictureBox5.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox5.Size = new System.Drawing.Size(111, 60);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox5.TabIndex = 5;
             this.pictureBox5.TabStop = false;
@@ -241,10 +242,10 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(11, 323);
-            this.pictureBox6.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox6.Location = new System.Drawing.Point(12, 388);
+            this.pictureBox6.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox6.Size = new System.Drawing.Size(111, 60);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox6.TabIndex = 5;
             this.pictureBox6.TabStop = false;
@@ -252,10 +253,10 @@
             // pictureBox7
             // 
             this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(11, 392);
-            this.pictureBox7.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox7.Location = new System.Drawing.Point(12, 470);
+            this.pictureBox7.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox7.Size = new System.Drawing.Size(111, 60);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox7.TabIndex = 5;
             this.pictureBox7.TabStop = false;
@@ -263,10 +264,10 @@
             // pictureBox8
             // 
             this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(11, 459);
-            this.pictureBox8.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox8.Location = new System.Drawing.Point(12, 551);
+            this.pictureBox8.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox8.Size = new System.Drawing.Size(111, 60);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox8.TabIndex = 5;
             this.pictureBox8.TabStop = false;
@@ -274,10 +275,10 @@
             // pictureBox9
             // 
             this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
-            this.pictureBox9.Location = new System.Drawing.Point(194, 118);
-            this.pictureBox9.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox9.Location = new System.Drawing.Point(218, 142);
+            this.pictureBox9.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(757, 508);
+            this.pictureBox9.Size = new System.Drawing.Size(852, 610);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox9.TabIndex = 5;
             this.pictureBox9.TabStop = false;
@@ -285,10 +286,10 @@
             // pictureBox10
             // 
             this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
-            this.pictureBox10.Location = new System.Drawing.Point(11, 525);
-            this.pictureBox10.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.pictureBox10.Location = new System.Drawing.Point(12, 630);
+            this.pictureBox10.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(99, 50);
+            this.pictureBox10.Size = new System.Drawing.Size(111, 60);
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox10.TabIndex = 5;
             this.pictureBox10.TabStop = false;
@@ -297,9 +298,9 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(12, 101);
+            this.label7.Location = new System.Drawing.Point(14, 121);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(17, 11);
+            this.label7.Size = new System.Drawing.Size(21, 14);
             this.label7.TabIndex = 8;
             this.label7.Text = "a1";
             // 
@@ -307,9 +308,9 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(12, 170);
+            this.label8.Location = new System.Drawing.Point(14, 204);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(17, 11);
+            this.label8.Size = new System.Drawing.Size(21, 14);
             this.label8.TabIndex = 8;
             this.label8.Text = "a2";
             // 
@@ -317,9 +318,9 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(12, 238);
+            this.label9.Location = new System.Drawing.Point(14, 286);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(17, 11);
+            this.label9.Size = new System.Drawing.Size(21, 14);
             this.label9.TabIndex = 8;
             this.label9.Text = "a3";
             // 
@@ -327,9 +328,9 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(12, 306);
+            this.label10.Location = new System.Drawing.Point(14, 367);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(17, 11);
+            this.label10.Size = new System.Drawing.Size(21, 14);
             this.label10.TabIndex = 8;
             this.label10.Text = "a4";
             // 
@@ -337,9 +338,9 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(12, 375);
+            this.label11.Location = new System.Drawing.Point(14, 450);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(17, 11);
+            this.label11.Size = new System.Drawing.Size(21, 14);
             this.label11.TabIndex = 8;
             this.label11.Text = "a5";
             // 
@@ -347,9 +348,9 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(12, 442);
+            this.label12.Location = new System.Drawing.Point(14, 530);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(17, 11);
+            this.label12.Size = new System.Drawing.Size(21, 14);
             this.label12.TabIndex = 8;
             this.label12.Text = "a6";
             // 
@@ -357,9 +358,9 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(12, 508);
+            this.label13.Location = new System.Drawing.Point(14, 610);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(17, 11);
+            this.label13.Size = new System.Drawing.Size(21, 14);
             this.label13.TabIndex = 8;
             this.label13.Text = "a7";
             // 
@@ -367,18 +368,18 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(12, 576);
+            this.label14.Location = new System.Drawing.Point(14, 691);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(17, 11);
+            this.label14.Size = new System.Drawing.Size(21, 14);
             this.label14.TabIndex = 8;
             this.label14.Text = "a8";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(39, 611);
+            this.label15.Location = new System.Drawing.Point(44, 733);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(71, 15);
+            this.label15.Size = new System.Drawing.Size(80, 18);
             this.label15.TabIndex = 6;
             this.label15.Text = "2019.1.8";
             this.label15.Click += new System.EventHandler(this.label5_Click);
@@ -387,18 +388,18 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("宋体", 6.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(-809, 1047);
+            this.label16.Location = new System.Drawing.Point(-910, 1256);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(53, 11);
+            this.label16.Size = new System.Drawing.Size(63, 14);
             this.label16.TabIndex = 8;
             this.label16.Text = "2019.1.8";
             // 
             // View1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1010, 640);
+            this.ClientSize = new System.Drawing.Size(1136, 768);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
@@ -430,7 +431,7 @@
             this.Controls.Add(this.pictureBox1);
             this.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.Name = "View1";
             this.Text = "杭电智慧实验室监控主界面";
             this.Load += new System.EventHandler(this.View1_Load);
