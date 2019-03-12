@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using NVRCsharpDemo;
 using twpx.Model;
+using twpx;
+using System.IO;
 
 namespace NVRCsharpDemo
 {
@@ -17,12 +19,10 @@ namespace NVRCsharpDemo
         private Int32 m_lRealHandle=-1;//-1表示失败，其他值作为NET_DVR_StopRealPlay等函数的句柄参数
         private uint dwAChanTotalNum; //设备模拟通道个数，数字（IP）通道最大个数为byIPChanNum + byHighDChanNum*256 
         private uint dwDChanTotalNum;//设备最大数字通道个数，低8位，高8位见byHighDChanNum
-        private Int32 m_lPort = -1;
         private uint iLastErr = 0; // 用于接收调用NET_DVR_GetLastError获取的错误码
-        private IntPtr m_ptrRealHandle;
         private int[] iIPDevID = new int[96];
         private int[] iChannelNum = new int[96];
-        public CHCNetSDK.NET_DVR_DEVICEINFO_V30 DeviceInfo;// 设备信息结构体
+        public CHCNetSDK.NET_DVR_DEVICEINFO_V40 DeviceInfo;// 设备信息结构体
         public CHCNetSDK.NET_DVR_IPPARACFG_V40 m_struIpParaCfgV40; //IP设备资源及IP通道资源配置结构体。
         private long iSelIndex = 0;
 
@@ -35,9 +35,21 @@ namespace NVRCsharpDemo
         public CHCNetSDK.NET_DVR_IPCHANINFO_V40 struChanInfoV40;
         private int m_lFindHandle = -1;
         private int m_lPlayHandle = -1;
-        private bool m_bReverse;
-        private bool m_bPause;
         private string strResult; //存储查找路径
+        private long lHandle;
+        //监听布防需要的变量
+        private Int32 m_lAlarmHandle = -1;//布防句柄
+        private int iPicNumber = 0; //图片序号
+        private CHCNetSDK.MSGCallBack m_falarmData = null;
+        public delegate void UpdateListBoxCallback(string strAlarmTime, string strDevIP, string strAlarmMsg);
+        CHCNetSDK.NET_VCA_TRAVERSE_PLANE m_struTraversePlane = new CHCNetSDK.NET_VCA_TRAVERSE_PLANE();
+        CHCNetSDK.NET_VCA_AREA m_struVcaArea = new CHCNetSDK.NET_VCA_AREA();
+        CHCNetSDK.NET_VCA_INTRUSION m_struIntrusion = new CHCNetSDK.NET_VCA_INTRUSION();
+        CHCNetSDK.UNION_STATFRAME m_struStatFrame = new CHCNetSDK.UNION_STATFRAME();
+        CHCNetSDK.UNION_STATTIME m_struStatTime = new CHCNetSDK.UNION_STATTIME();
+        //private CHCNetSDK.MSGCallBack_V31 m_falarmData_V31 = null;
+
+        Common Ccommon = new Common();
 
         
 
@@ -63,6 +75,41 @@ namespace NVRCsharpDemo
             logout();
         }
 
+        //监听布防初始化
+        public void initAlam()
+        {
+            byte[] strIP = new byte[16 * 16];
+            uint dwValidNum = 0;
+            Boolean bEnableBind = false;
+
+            //获取本地PC网卡IP信息
+            if (CHCNetSDK.NET_DVR_GetLocalIP(strIP, ref dwValidNum, ref bEnableBind))
+            {
+                if (dwValidNum > 0)
+                {
+                    //取第一张网卡的IP地址为默认监听端口
+                    CHCNetSDK.NET_DVR_SetValidIP(0, true); //绑定第一张网卡
+                }
+
+            }
+
+            //保存SDK日志 To save the SDK log
+            //CHCNetSDK.NET_DVR_SetLogToFile(3, "C:\\SdkLog\\", true);
+            /*
+            for (int i = 0; i < 200; i++)
+            {
+                m_lAlarmHandle[i] = -1;
+            }
+            
+            //设置报警回调函数
+            if (m_falarmData_V31 == null)
+            {
+                m_falarmData_V31 = new CHCNetSDK.MSGCallBack_V31(MsgCallback_V31);
+            }
+            CHCNetSDK.NET_DVR_SetDVRMessageCallBack_V31(m_falarmData_V31, IntPtr.Zero);
+            */
+        }
+
         //设备登录
         public void login()
         {
@@ -70,13 +117,12 @@ namespace NVRCsharpDemo
             if (UserID < 0)
             {
                 iLastErr = CHCNetSDK.NET_DVR_GetLastError();
-                Console.WriteLine("iLastErr = " + iLastErr);
+                //Console.WriteLine("iLastErr = " + iLastErr);
+                Ccommon.addLog("iLastErr = " + iLastErr);
             }
             else
             {
                 //登录成功
-                Console.WriteLine("userId = " + UserID);
-
                 dwAChanTotalNum = (uint)DeviceInfo.byChanNum;
                 dwDChanTotalNum = (uint)DeviceInfo.byIPChanNum + 256 * (uint)DeviceInfo.byHighDChanNum;
                 if (dwDChanTotalNum > 0)
@@ -95,7 +141,7 @@ namespace NVRCsharpDemo
                     // MessageBox.Show("This device has no IP channel!");
                 }
 
-                MessageBox.Show("登录成功.");
+                Ccommon.addLog("登录成功");
             }
         }
 
@@ -194,6 +240,11 @@ namespace NVRCsharpDemo
             Marshal.FreeHGlobal(ptrIpParaCfgV40);
         }
 
+        internal void setM_lAlarmHandle(object p)
+        {
+            throw new NotImplementedException();
+        }
+
         //
         public void deviceListIPChannel(Int32 iChanNo, byte byOnline, int byIPID)
         {
@@ -251,7 +302,7 @@ namespace NVRCsharpDemo
             // 检查录像状态
             if (m_bRecord)
             {
-                MessageBox.Show("请先停止录像!");
+                //MessageBox.Show("请先停止录像!");
                 return;
             }
             if (m_lRealHandle < 0)
@@ -289,31 +340,31 @@ namespace NVRCsharpDemo
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     string str = "预览失败，输出错误号: " + iLastErr; //预览失败，输出错误号 failed to start live view, and output the error code.
-                    MessageBox.Show(str);
+                    //MessageBox.Show(str);
+                    Ccommon.addLog(str);
                     return;
                 }
                 else
                 {
-                    MessageBox.Show("预览成功");
+                    //MessageBox.Show("预览成功");
+                    Ccommon.addLog(str);
                     return;
                 }
             }
 
         }
-
-        public bool realPlay()
+        //无参预览
+        public void realPlay()
         {
             // 检查设备登录状态
             if (UserID < 0)
             {
                 MessageBox.Show("请先登录设备!");
-                return false;
             }
             // 检查录像状态
             if (m_bRecord)
             {
                 MessageBox.Show("请先停止录像!");
-                return false;
             }
             if (m_lRealHandle < 0)
             {
@@ -323,10 +374,10 @@ namespace NVRCsharpDemo
 
 
                 //播放窗口的句柄，为NULL表示不解码显示
-                //lpPreviewInfo.hPlayWnd = pictureBox.Handle;预览窗口 live view window
+                //lpPreviewInfo.hPlayWnd = null;//预览窗口 live view window
                 //通道号，目前设备模拟通道号从1开始，数字通道的起始通道号通过NET_DVR_GetDVRConfig（配置命令NET_DVR_GET_IPPARACFG_V40）获取（dwStartDChan)
 
-                lpPreviewInfo.lChannel = iChannelNum[(int)iSelIndex];//预览的设备通道 the device channel number
+                lpPreviewInfo.lChannel = 1;//预览的设备通道 the device channel number
                 //码流类型：0-主码流，1-子码流，2-三码流，3-虚拟码流，以此类推 
 
                 lpPreviewInfo.dwStreamType = 0;
@@ -344,26 +395,23 @@ namespace NVRCsharpDemo
 
                 m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V40(UserID, ref lpPreviewInfo, null/*RealData*/, pUser);
 
-                //Console.WriteLine(m_lRealHandle);
+                Console.WriteLine(m_lRealHandle);
 
                 if (m_lRealHandle < 0)
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     string str = "预览失败，输出错误号: " + iLastErr; //预览失败，输出错误号 failed to start live view, and output the error code.
                     MessageBox.Show(str);
-                    return false;
                 }
                 else
                 {
                     MessageBox.Show("预览成功");
-                    return true;
                 }
             }
-            return false;
         }
-
+        
         //停止预览
-        public void stopPlay(PictureBox pictureBox)
+        public void stopPlay()
         {
             if (!CHCNetSDK.NET_DVR_StopRealPlay(m_lRealHandle))
             {
@@ -374,7 +422,7 @@ namespace NVRCsharpDemo
             }
             MessageBox.Show("NET_DVR_StopRealPlay succ!");
             m_lRealHandle = -1;
-            pictureBox.Invalidate();//刷新窗口 refresh the window
+            //pictureBox.Invalidate();刷新窗口 refresh the window
             return;
         }
 
@@ -431,7 +479,7 @@ namespace NVRCsharpDemo
         //停止录像
         public void stopRecord()
         {
-
+             
         }
 
         //获取IP
@@ -463,6 +511,12 @@ namespace NVRCsharpDemo
             return UserID;
         }
 
+        //获取m_bRecord
+        public bool getBRecord()
+        {
+            return m_bRecord;
+        }
+
         //tostring()
         public void CameraToString()
         {
@@ -481,10 +535,9 @@ namespace NVRCsharpDemo
         }
 
 
-        //单独调用录像
+        //无窗口参录像
         public void SaveRecord(string saveFile)
         {
-            login();
             realPlay();
             startRecord(saveFile);
         }
@@ -548,157 +601,253 @@ namespace NVRCsharpDemo
             return sJpegPicFileName;
         }
 
-
-        //录像文件查找
-        // 参数开始年月日-结束年月日
-        public void findFile(int y1, int m1, int d1, int y2, int m2, int d2)
+        
+        //报警回调函数1
+        public bool MsgCallback_V31(int lCommand, ref CHCNetSDK.NET_DVR_ALARMER pAlarmer, IntPtr pAlarmInfo, uint dwBufLen, IntPtr pUser)
         {
-            //DateTimePicker dateTimeStart = new DateTimePicker();//dateTime选择
-            //DateTimePicker dateTimeEnd = new DateTimePicker();//
-            DateTime dateTimeStart = new DateTime(y1, m1, d1, 0, 0, 0);
-            DateTime dateTimeEnd = new DateTime(y2, m2, d2, 23, 50, 59);
+            //通过lCommand来判断接收到的报警信息类型，不同的lCommand对应不同的pAlarmInfo内容
+            AlarmMessageHandle(lCommand, ref pAlarmer, pAlarmInfo, dwBufLen, pUser);
 
-            CHCNetSDK.NET_DVR_FILECOND_V40 struFileCond_V40 = new CHCNetSDK.NET_DVR_FILECOND_V40();
-            struFileCond_V40.lChannel = iChannelNum[0]; //通道号 Channel number
-            struFileCond_V40.dwFileType = 0xff; //0xff-全部，0-定时录像，1-移动侦测，2-报警触发，...
-            struFileCond_V40.dwIsLocked = 0xff; //0-未锁定文件，1-锁定文件，0xff表示所有文件（包括锁定和未锁定）
-
-            //设置录像查找的开始时间 Set the starting time to search video files
-            struFileCond_V40.struStartTime.dwYear = (uint)dateTimeStart.Year;
-            struFileCond_V40.struStartTime.dwMonth = (uint)dateTimeStart.Month;
-            struFileCond_V40.struStartTime.dwDay = (uint)dateTimeStart.Day;
-            struFileCond_V40.struStartTime.dwHour = (uint)dateTimeStart.Hour;
-            struFileCond_V40.struStartTime.dwMinute = (uint)dateTimeStart.Minute;
-            struFileCond_V40.struStartTime.dwSecond = (uint)dateTimeStart.Second;
-
-            //设置录像查找的结束时间 Set the stopping time to search video files
-            struFileCond_V40.struStopTime.dwYear = (uint)dateTimeEnd.Year;
-            struFileCond_V40.struStopTime.dwMonth = (uint)dateTimeEnd.Month;
-            struFileCond_V40.struStopTime.dwDay = (uint)dateTimeEnd.Day;
-            struFileCond_V40.struStopTime.dwHour = (uint)dateTimeEnd.Hour;
-            struFileCond_V40.struStopTime.dwMinute = (uint)dateTimeEnd.Minute;
-            struFileCond_V40.struStopTime.dwSecond = (uint)dateTimeEnd.Second;
-
-            //开始录像文件查找 Start to search video files 
-            m_lFindHandle = CHCNetSDK.NET_DVR_FindFile_V40(UserID, ref struFileCond_V40);
-            //  找不到
-            if (m_lFindHandle < 0)
+            return true; //回调函数需要有返回，表示正常接收到数据
+        }
+        //报警回调函数2
+        public void MsgCallback(int lCommand, ref CHCNetSDK.NET_DVR_ALARMER pAlarmer, IntPtr pAlarmInfo, uint dwBufLen, IntPtr pUser)
+        {
+            //通过lCommand来判断接收到的报警信息类型，不同的lCommand对应不同的pAlarmInfo内容
+            AlarmMessageHandle(lCommand, ref pAlarmer, pAlarmInfo, dwBufLen, pUser);
+        }
+        //报警回调函数3
+        public void AlarmMessageHandle(int lCommand, ref CHCNetSDK.NET_DVR_ALARMER pAlarmer, IntPtr pAlarmInfo, uint dwBufLen, IntPtr pUser)
+        {
+            //通过lCommand来判断接收到的报警信息类型，不同的lCommand对应不同的pAlarmInfo内容
+            switch (lCommand)
             {
-                iLastErr = CHCNetSDK.NET_DVR_GetLastError();
-                string str = "NET_DVR_FindFile_V40 failed, error code= " + iLastErr; //预览失败，输出错误号
-                MessageBox.Show(str);
-                return;
+                case CHCNetSDK.COMM_UPLOAD_FACESNAP_RESULT://人脸抓拍结果信息
+                    ProcessCommAlarm_FaceSnap(ref pAlarmer, pAlarmInfo, dwBufLen, pUser);
+                    break;
+                    /*
+                case CHCNetSDK.COMM_SNAP_MATCH_ALARM://人脸比对结果信息
+                    ProcessCommAlarm_FaceMatch(ref pAlarmer, pAlarmInfo, dwBufLen, pUser);
+                    break;
+                    */
+                default:
+                    {
+                        /*
+                        //报警设备IP地址
+                        string strIP = ip;
+
+                        //报警信息类型
+                        string stringAlarm = "报警上传，信息类型：" + lCommand;
+
+                        if (InvokeRequired)
+                        {
+                            object[] paras = new object[3];
+                            paras[0] = DateTime.Now.ToString(); //当前PC系统时间
+                            paras[1] = strIP;
+                            paras[2] = stringAlarm;
+                            listViewAlarmInfo.BeginInvoke(new UpdateListBoxCallback(UpdateClientList), paras);
+                        }
+                        else
+                        {
+                            //创建该控件的主线程直接更新信息列表 
+                            UpdateClientList(DateTime.Now.ToString(), strIP, stringAlarm);
+                        }
+                        */
+                    }
+                    break;
+            }
+        }
+
+        //人脸抓拍结果信息
+        private void ProcessCommAlarm_FaceSnap(ref CHCNetSDK.NET_DVR_ALARMER pAlarmer, IntPtr pAlarmInfo, uint dwBufLen, IntPtr pUser)
+        {
+            CHCNetSDK.NET_VCA_FACESNAP_RESULT struFaceSnapInfo = new CHCNetSDK.NET_VCA_FACESNAP_RESULT();
+            uint dwSize = (uint)Marshal.SizeOf(struFaceSnapInfo);
+            struFaceSnapInfo = (CHCNetSDK.NET_VCA_FACESNAP_RESULT)Marshal.PtrToStructure(pAlarmInfo, typeof(CHCNetSDK.NET_VCA_FACESNAP_RESULT));
+
+            //报警设备IP地址
+            string strIP = ip;
+
+            //保存抓拍图片数据
+            if ((struFaceSnapInfo.dwBackgroundPicLen != 0) && (struFaceSnapInfo.pBuffer2 != IntPtr.Zero))
+            {
+                iPicNumber++;
+                string str = ".\\picture\\FaceSnap_CapPic_[" + strIP + "]_lUerID_[" + pAlarmer.lUserID + "]_" + iPicNumber + ".jpg";
+                FileStream fs = new FileStream(str, FileMode.Create);
+                int iLen = (int)struFaceSnapInfo.dwBackgroundPicLen;
+                byte[] by = new byte[iLen];
+                Marshal.Copy(struFaceSnapInfo.pBuffer2, by, 0, iLen);
+                fs.Write(by, 0, iLen);
+                fs.Close();
+            }
+
+            //报警时间：年月日时分秒
+            string strTimeYear = ((struFaceSnapInfo.dwAbsTime >> 26) + 2000).ToString();
+            string strTimeMonth = ((struFaceSnapInfo.dwAbsTime >> 22) & 15).ToString("d2");
+            string strTimeDay = ((struFaceSnapInfo.dwAbsTime >> 17) & 31).ToString("d2");
+            string strTimeHour = ((struFaceSnapInfo.dwAbsTime >> 12) & 31).ToString("d2");
+            string strTimeMinute = ((struFaceSnapInfo.dwAbsTime >> 6) & 63).ToString("d2");
+            string strTimeSecond = ((struFaceSnapInfo.dwAbsTime >> 0) & 63).ToString("d2");
+            string strTime = strTimeYear + "-" + strTimeMonth + "-" + strTimeDay + " " + strTimeHour + ":" + strTimeMinute + ":" + strTimeSecond;
+
+            string stringAlarm = "人脸抓拍结果，前端设备IP：" + strIP + "，抓拍时间：" + strTime;
+            /*
+            if (InvokeRequired)
+            {
+                object[] paras = new object[3];
+                paras[0] = DateTime.Now.ToString(); //当前PC系统时间
+                paras[1] = strIP;
+                paras[2] = stringAlarm;
+                listViewAlarmInfo.BeginInvoke(new UpdateListBoxCallback(UpdateClientList), paras);
             }
             else
             {
-                CHCNetSDK.NET_DVR_FINDDATA_V30 struFileData = new CHCNetSDK.NET_DVR_FINDDATA_V30();
-                while (true)
+                //创建该控件的主线程直接更新信息列表 
+                UpdateClientList(DateTime.Now.ToString(), strIP, stringAlarm);
+            }
+            */
+        }
+
+        //设置布防句柄
+        public void setM_lAlarmHandle(Int32 AlarmHandle)
+        {
+            m_lAlarmHandle = AlarmHandle;
+        }
+        //返回布防句柄
+        public Int32 getM_lAlarmHandle()
+        {
+            return m_lAlarmHandle;
+        }
+        //布防
+        public void setAlarm(CHCNetSDK.NET_DVR_SETUPALARM_PARAM struAlarmParam)
+        {
+            m_lAlarmHandle = CHCNetSDK.NET_DVR_SetupAlarmChan_V41(UserID, ref struAlarmParam);
+        }
+        //撤防
+        public bool closeAlarm()
+        {
+            if(m_lAlarmHandle >= 0)
+            {
+                if (!CHCNetSDK.NET_DVR_CloseAlarmChan_V30(m_lAlarmHandle))
                 {
-                    //逐个获取查找到的文件信息 Get file information one by one.
-                    int result = CHCNetSDK.NET_DVR_FindNextFile_V30(m_lFindHandle, ref struFileData);
-
-                    if (result == CHCNetSDK.NET_DVR_ISFINDING)  //正在查找请等待 Searching, please wait
-                    {
-                        continue;
-                    }
-                    else if (result == CHCNetSDK.NET_DVR_FILE_SUCCESS) //获取文件信息成功 Get the file information successfully
-                    {
-                        string str1 = struFileData.sFileName;
-
-                        string str2 = Convert.ToString(struFileData.struStartTime.dwYear) + "-" +
-                            Convert.ToString(struFileData.struStartTime.dwMonth) + "-" +
-                            Convert.ToString(struFileData.struStartTime.dwDay) + " " +
-                            Convert.ToString(struFileData.struStartTime.dwHour) + ":" +
-                            Convert.ToString(struFileData.struStartTime.dwMinute) + ":" +
-                            Convert.ToString(struFileData.struStartTime.dwSecond);
-
-                        string str3 = Convert.ToString(struFileData.struStopTime.dwYear) + "-" +
-                            Convert.ToString(struFileData.struStopTime.dwMonth) + "-" +
-                            Convert.ToString(struFileData.struStopTime.dwDay) + " " +
-                            Convert.ToString(struFileData.struStopTime.dwHour) + ":" +
-                            Convert.ToString(struFileData.struStopTime.dwMinute) + ":" +
-                            Convert.ToString(struFileData.struStopTime.dwSecond);
-
-                        strResult = str1;
-                        Console.WriteLine(strResult);
-                        //listViewFile.Items.Add(new ListViewItem(new string[] { str1, str2, str3 }));//将查找的录像文件添加到列表中
-
-                    }
-                    else if (result == CHCNetSDK.NET_DVR_FILE_NOFIND || result == CHCNetSDK.NET_DVR_NOMOREFILE)
-                    {
-                        break; //未查找到文件或者查找结束，退出   No file found or no more file found, search is finished 
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    return false;
+                }
+                else
+                {
+                    return true;
                 }
             }
+            return true;
         }
 
-        // 录像回放(文件名，播放窗口)
-        public void playBack(string sPlayBackFileName, PictureBox VideoPlayWnd)
+        /*
+        //人脸比对结果信息
+        private void ProcessCommAlarm_FaceMatch(ref CHCNetSDK.NET_DVR_ALARMER pAlarmer, IntPtr pAlarmInfo, uint dwBufLen, IntPtr pUser)
         {
-            Timer timerPlayback = new Timer();
-            if (sPlayBackFileName == null)
+            CHCNetSDK.NET_VCA_FACESNAP_MATCH_ALARM struFaceMatchAlarm = new CHCNetSDK.NET_VCA_FACESNAP_MATCH_ALARM();
+            uint dwSize = (uint)Marshal.SizeOf(struFaceMatchAlarm);
+            struFaceMatchAlarm = (CHCNetSDK.NET_VCA_FACESNAP_MATCH_ALARM)Marshal.PtrToStructure(pAlarmInfo, typeof(CHCNetSDK.NET_VCA_FACESNAP_MATCH_ALARM));
+
+            //报警设备IP地址
+            string strIP = ip;
+
+            //保存抓拍人脸子图图片数据
+            if ((struFaceMatchAlarm.struSnapInfo.dwSnapFacePicLen != 0) && (struFaceMatchAlarm.struSnapInfo.pBuffer1 != IntPtr.Zero))
             {
-                MessageBox.Show("Please select one file firstly!");//先选择回放的文件
-                return;
+                iPicNumber++;
+                string str = ".\\picture\\FaceMatch_FacePic_[" + strIP + "]_lUerID_[" + pAlarmer.lUserID + "]_" + iPicNumber + ".jpg";
+                FileStream fs = new FileStream(str, FileMode.Create);
+                int iLen = (int)struFaceMatchAlarm.struSnapInfo.dwSnapFacePicLen;
+                byte[] by = new byte[iLen];
+                Marshal.Copy(struFaceMatchAlarm.struSnapInfo.pBuffer1, by, 0, iLen);
+                fs.Write(by, 0, iLen);
+                fs.Close();
             }
 
-            if (m_lPlayHandle >= 0)
+            //保存比对结果人脸库人脸图片数据
+            if ((struFaceMatchAlarm.struBlackListInfo.dwBlackListPicLen != 0) && (struFaceMatchAlarm.struBlackListInfo.pBuffer1 != IntPtr.Zero))
             {
-                //如果已经正在回放，先停止回放
-                if (!CHCNetSDK.NET_DVR_StopPlayBack(m_lPlayHandle))
-                {
-                    iLastErr = CHCNetSDK.NET_DVR_GetLastError();
-                    string str = "NET_DVR_StopPlayBack failed, error code= " + iLastErr; //停止回放失败，输出错误号
-                    MessageBox.Show(str);
-                    return;
-                }
-
-                m_bReverse = false;
-                //btnReverse.Text = "Reverse";
-                //labelReverse.Text = "切换为倒放";
-
-                m_bPause = false;
-                //btnPause.Text = "||";
-                //labelPause.Text = "暂停";
-
-                m_lPlayHandle = -1;
-                //PlaybackprogressBar.Value = 0;
+                iPicNumber++;
+                string str = ".\\picture\\FaceMatch_BlackListPic_[" + strIP + "]_lUerID_[" + pAlarmer.lUserID + "]" +
+                    "_fSimilarity[" + struFaceMatchAlarm.fSimilarity + "]_" + iPicNumber + ".jpg";
+                FileStream fs = new FileStream(str, FileMode.Create);
+                int iLen = (int)struFaceMatchAlarm.struBlackListInfo.dwBlackListPicLen;
+                byte[] by = new byte[iLen];
+                Marshal.Copy(struFaceMatchAlarm.struBlackListInfo.pBuffer1, by, 0, iLen);
+                fs.Write(by, 0, iLen);
+                fs.Close();
             }
 
-            //按文件名回放
-            m_lPlayHandle = CHCNetSDK.NET_DVR_PlayBackByName(UserID, sPlayBackFileName, VideoPlayWnd.Handle);
-            Console.WriteLine("UserID = " + UserID + ", m_lPlayHandle = " + m_lPlayHandle);
-            if (m_lPlayHandle < 0)
+            //抓拍时间：年月日时分秒
+            string strTimeYear = ((struFaceMatchAlarm.struSnapInfo.dwAbsTime >> 26) + 2000).ToString();
+            string strTimeMonth = ((struFaceMatchAlarm.struSnapInfo.dwAbsTime >> 22) & 15).ToString("d2");
+            string strTimeDay = ((struFaceMatchAlarm.struSnapInfo.dwAbsTime >> 17) & 31).ToString("d2");
+            string strTimeHour = ((struFaceMatchAlarm.struSnapInfo.dwAbsTime >> 12) & 31).ToString("d2");
+            string strTimeMinute = ((struFaceMatchAlarm.struSnapInfo.dwAbsTime >> 6) & 63).ToString("d2");
+            string strTimeSecond = ((struFaceMatchAlarm.struSnapInfo.dwAbsTime >> 0) & 63).ToString("d2");
+            string strTime = strTimeYear + "-" + strTimeMonth + "-" + strTimeDay + " " + strTimeHour + ":" + strTimeMinute + ":" + strTimeSecond;
+
+            string stringAlarm = "人脸比对报警，抓拍设备：" + System.Text.Encoding.UTF8.GetString(struFaceMatchAlarm.struSnapInfo.struDevInfo.struDevIP.sIpV4).TrimEnd('\0') + "，抓拍时间："
+                + strTime + "，相似度：" + struFaceMatchAlarm.fSimilarity;
+
+            if (InvokeRequired)
+            {
+                object[] paras = new object[3];
+                paras[0] = DateTime.Now.ToString(); //当前PC系统时间
+                paras[1] = strIP;
+                paras[2] = stringAlarm;
+                listViewAlarmInfo.BeginInvoke(new UpdateListBoxCallback(UpdateClientList), paras);
+            }
+            else
+            {
+                //创建该控件的主线程直接更新信息列表 
+                UpdateClientList(DateTime.Now.ToString(), strIP, stringAlarm);
+            }
+        }
+        */
+        /*
+        //启动监听
+        private void startListen()
+        {
+            string sLocalIP = textBoxListenIP.Text;
+            ushort wLocalPort = ushort.Parse(textBoxListenPort.Text);
+
+            if (m_falarmData == null)
+            {
+                m_falarmData = new CHCNetSDK.MSGCallBack(MsgCallback);
+            }
+
+            iListenHandle = CHCNetSDK.NET_DVR_StartListen_V30(sLocalIP, wLocalPort, m_falarmData, IntPtr.Zero);
+            if (iListenHandle < 0)
             {
                 iLastErr = CHCNetSDK.NET_DVR_GetLastError();
-                string str = "NET_DVR_PlayBackByName failed, error code= " + iLastErr;
-                MessageBox.Show(str);
-                return;
+                strErr = "启动监听失败，错误号：" + iLastErr; //启动监听失败，输出错误号
+                MessageBox.Show(strErr);
             }
-
-            uint iOutValue = 0;
-            if (!CHCNetSDK.NET_DVR_PlayBackControl_V40(m_lPlayHandle, CHCNetSDK.NET_DVR_PLAYSTART, IntPtr.Zero, 0, IntPtr.Zero, ref iOutValue))
+            else
+            {
+                MessageBox.Show("成功启动监听！");
+                btnStopListen.Enabled = true;
+                btnStartListen.Enabled = false;
+            }
+        }
+        //关闭监听
+        */
+        private void stopListen()
+        {
+            if (!CHCNetSDK.NET_DVR_StopListen_V30(iListenHandle))
             {
                 iLastErr = CHCNetSDK.NET_DVR_GetLastError();
-                string str = "NET_DVR_PLAYSTART failed, error code= " + iLastErr; //回放控制失败，输出错误号
-                MessageBox.Show(str);
-                return;
+                strErr = "停止监听失败，错误号：" + iLastErr; //撤防失败，输出错误号
+                MessageBox.Show(strErr);
             }
-            timerPlayback.Interval = 1000;
-            timerPlayback.Enabled = true;
+            else
+            {
+                MessageBox.Show("停止监听！");
+                btnStopListen.Enabled = false;
+                btnStartListen.Enabled = true;
+            }
         }
-        
-        //录像回放汇总
-        public void playBack2(int y1, int m1, int d1, int y2, int m2, int d2, PictureBox VideoPlayWnd)
-        {
-            findFile(y1, m1, d1, y2, m2, d2);
-            playBack(strResult, VideoPlayWnd);
-        }
-
 
     }
 }

@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using twpx.Dao;
 using twpx.Model;
 using NVRCsharpDemo;
+using System.Diagnostics;
+using System.Timers;
 
 namespace twpx
 {
@@ -18,6 +20,7 @@ namespace twpx
     {
 
         public bool m_bInitSDK = false;
+        Common Fcommon = new Common();
 
         public Form1()
         {
@@ -37,8 +40,18 @@ namespace twpx
             }
             SqlSugarClient db = SugarDao.GetInstance();
             var list = db.Queryable<Device>().ToList();
-        }
 
+        }
+        /*
+        //计时触发函数 保存录像
+        private static void TimedEvent(object source, ElapsedEventArgs e)
+        {
+            for (int i = 0; i < Fcommon.GetCount(); i++)
+            {
+                if
+            }
+        }
+        */
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
@@ -127,6 +140,40 @@ namespace twpx
         private void 设备管理ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var whd = new replay();
+            whd.Show();
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            var whd = new VideoList();
+            whd.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var frm = new Devices();
+            frm.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var frm = new Screen();
+            frm.Show();
+        }
+
+        private void 一键报警ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://www.hao123.com/haoserver/tefudh.htm"); // 使用本机默认浏览器打开网址
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Fcommon.allRecord();
         }
     }
 }

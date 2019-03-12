@@ -49,6 +49,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // listView1
@@ -66,7 +67,7 @@
             this.listView1.Location = new System.Drawing.Point(14, 156);
             this.listView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1176, 713);
+            this.listView1.Size = new System.Drawing.Size(1176, 592);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -139,7 +140,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(186, 44);
             this.button4.TabIndex = 1;
-            this.button4.Text = "登录设备";
+            this.button4.Text = "登录/注销设备";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -150,9 +151,9 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(181, 44);
             this.button5.TabIndex = 1;
-            this.button5.Text = "注销设备";
+            this.button5.Text = "设备布防/撤防";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button4_Click);
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -234,11 +235,21 @@
             this.textBox4.Size = new System.Drawing.Size(182, 28);
             this.textBox4.TabIndex = 3;
             // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(14, 767);
+            this.textBox5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBox5.Multiline = true;
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(1176, 104);
+            this.textBox5.TabIndex = 6;
+            // 
             // Devices
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1204, 884);
+            this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox3);
@@ -285,5 +296,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.TextBox textBox5;
     }
 }

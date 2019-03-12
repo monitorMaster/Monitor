@@ -86,14 +86,27 @@
       <DependentUpon>Manage2.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Device.cs" />
+    <Compile Include="Model\Video.cs" />
     <Compile Include="PlayCtrl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="replay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="replay.Designer.cs">
+      <DependentUpon>replay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Screen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Screen.Designer.cs">
       <DependentUpon>Screen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VideoList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoList.Designer.cs">
+      <DependentUpon>VideoList.cs</DependentUpon>
     </Compile>
     <Compile Include="View1.cs">
       <SubType>Form</SubType>
@@ -126,8 +139,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="replay.resx">
+      <DependentUpon>replay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Screen.resx">
       <DependentUpon>Screen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VideoList.resx">
+      <DependentUpon>VideoList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View1.resx">
       <DependentUpon>View1.cs</DependentUpon>

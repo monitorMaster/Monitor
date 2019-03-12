@@ -5548,7 +5548,7 @@ namespace NVRCsharpDemo
 
         //NET_DVR_Login_V30()参数结构
         [StructLayoutAttribute(LayoutKind.Sequential)]
-        public struct NET_DVR_DEVICEINFO_V30
+        public struct NET_DVR_DEVICEINFO_V40
         {
             [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = SERIALNO_LEN, ArraySubType = UnmanagedType.I1)]
             public byte[] sSerialNumber;  //序列号
@@ -13639,6 +13639,7 @@ namespace NVRCsharpDemo
             public byte byAlarmInfoType;//上传报警信息类型（智能交通摄像机支持）：0- 老报警信息（NET_DVR_PLATE_RESULT），1- 新报警信息(NET_ITS_PLATE_RESULT) 
             [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 14, ArraySubType = UnmanagedType.I1)]
             public byte[] byRes;//这里保留音频的压缩参数 
+            internal int byFaceAlarmDetection;
         }
 
         [StructLayoutAttribute(LayoutKind.Sequential)]
@@ -15262,7 +15263,7 @@ namespace NVRCsharpDemo
         Return:	-1表示失败，其他值表示返回的用户ID值
         **********************************************************/
         [DllImport(@"..\bin\HCNetSDK.dll")]
-        public static extern Int32 NET_DVR_Login_V30(string sDVRIP, Int32 wDVRPort, string sUserName, string sPassword, ref NET_DVR_DEVICEINFO_V30 lpDeviceInfo);
+        public static extern Int32 NET_DVR_Login_V30(string sDVRIP, Int32 wDVRPort, string sUserName, string sPassword, ref NET_DVR_DEVICEINFO_V40 lpDeviceInfo);
 
         /*********************************************************
         Function:	NET_DVR_Logout_V30
