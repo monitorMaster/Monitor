@@ -20,36 +20,39 @@ namespace twpx
         //获取链表
         public List<Camera> GetCL() { return CameraList;  }
          //添加登录设备
-        public void addCL(Camera camera)
+        public bool AddCL(Camera camera)
         {
             CameraList.Add(camera);//添加
-            try
+            //登录
+            if (CameraList[GetCount() - 1].login())
             {
-                CameraList[GetCount() - 1].login();//登录
+                return true;
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                CameraList.RemoveAt(GetCount() - 1);
             }
+            return false;
 
         }
-        public void addCL(string ip, Int16 port, string username, string password)
+        public bool AddCL(string ip, Int16 port, string username, string password)
         {
             CameraList.Add(new Camera(ip, port, username, password));//添加
-            try
+            //登录
+            if (CameraList[GetCount() - 1].login())
             {
-                CameraList[GetCount() - 1].login();//登录操作
+                return true;
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                CameraList.RemoveAt(GetCount() - 1);
             }
-
+            return false;
         }
 
 
         //设备注销(根据索引)
-        public void removeCLByI(int i)
+        public void RemoveCLByI(int i)
         {
             if (i < 0 || i > CameraList.Count) return;
             try
@@ -64,7 +67,7 @@ namespace twpx
         }
 
         //根据IP获取设备在设备链表里位置
-        public int getCamera(string ip)
+        public int GetCamera(string ip)
         {
             for (int i = 0; i < CameraList.Count; i++)
             {
@@ -74,7 +77,7 @@ namespace twpx
         }
 
         //获取ip
-        public string getIp(int i)
+        public string GetIp(int i)
         {
             if (i < 0 || i > CameraList.Count) return null;
             return CameraList[i].getIp();
@@ -112,16 +115,16 @@ namespace twpx
         }
 
         //指定其中一个预览
-        public void Privew(int i, PictureBox pictureBox)
+        public bool Privew(int i, PictureBox pictureBox)
         {
-            if (i < 0 || i > CameraList.Count) return;
-            try
+            if (i < 0 || i > CameraList.Count) return false;
+            if (CameraList[i].realPlay(pictureBox))
             {
-                CameraList[i].realPlay(pictureBox);
+                return true;
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                return false;
             }
         }
 
@@ -131,7 +134,7 @@ namespace twpx
             if (i < 0 || i > CameraList.Count) return null;
             //获取时间按格式yyyy-MM-dd,路径格式：C:\\HikVision\\设备IP
             string FileDirectory = saveDirectory + CameraList[i].getIp();
-            FileDirectory = setDirectory(FileDirectory);
+            FileDirectory = SetDirectory(FileDirectory);
             string FileName = FileDirectory + "\\" + DateTime.Now.ToString("yyyy-MM-dd") + ".mp4";
             try
             {
@@ -181,7 +184,7 @@ namespace twpx
         }
         
         //建立文件夹
-        public string setDirectory(string FileDectory)
+        public string SetDirectory(string FileDectory)
         {
             try
             {
@@ -200,12 +203,12 @@ namespace twpx
         }
 
         //初始化日志
-        public void initLog()
+        public void InitLog()
         {
             operateLog = "* * * * * * * * * * " + DateTime.Now.ToString() + " 程序运行 * * * * * * * * * *";
         }
         //退出日志保存
-        public void saveLog()
+        public void SaveLog()
         {
             operateLog = operateLog + "\n* * * * * * * * * * " + DateTime.Now.ToString() + " 程序退出 * * * * * * * * * *\n";
             using (FileStream fs = new FileStream(@"d:\test.txt", FileMode.OpenOrCreate, FileAccess.Write))
@@ -224,44 +227,44 @@ namespace twpx
             return operateLog;
         }
         //记录日志
-        public string addLog(string log)
+        public string AddLog(string log)
         {
             operateLog = operateLog +"\n" + DateTime.Now.ToString() + "：" + log;
             return operateLog;
         }
         //启动全部录像
-        public void allRecord()
+        public void AllRecord()
         {
             string FileDirectory;
             string FileName;
             for (int i=0; i<GetCount(); i++)
             {
                 FileDirectory = saveDirectory + CameraList[i].getIp();
-                FileDirectory = setDirectory(FileDirectory);
+                FileDirectory = SetDirectory(FileDirectory);
                 FileName = FileDirectory + "\\" + DateTime.Now.ToString("yyyy-MM-dd") + ".mp4";
-                CameraList[i].SaveRecord(FileName);  
+                CameraList[i].SaveRecord(FileName);  //调用Camera.cs 的无参录像
             }
         }
-        //设置布防句柄
-        public void setAlarmHandle(int i, int alarm)
+        //设置布防句
+        public void SetAlarmHandle(int i, int alarm)
         {
-            CameraList[i].setM_lAlarmHandle(Convert.ToInt32(alarm));
+            CameraList[i].SetM_lAlarmHandle(Convert.ToInt32(alarm));
         }
         //返回布防句柄
-        public int getAlarmHandle(int i)
+        public int GetAlarmHandle(int i)
         {
-            return CameraList[i].getM_lAlarmHandle();
+            return CameraList[i].GetM_lAlarmHandle();
 
         }
         //布防
-        public void setAlarm(int i, CHCNetSDK.NET_DVR_SETUPALARM_PARAM struAlarmParam)
+        public void SetAlarm(int i, CHCNetSDK.NET_DVR_SETUPALARM_PARAM struAlarmParam)
         {
-            CameraList[i].setAlarm(struAlarmParam);
+            CameraList[i].SetAlarm(struAlarmParam);
         }
         //撤防
-        public bool closeAlarm(int i)
+        public bool CloseAlarm(int i)
         {
-            if (CameraList[i].closeAlarm())
+            if (CameraList[i].CloseAlarm())
             {
                 return true;
             }

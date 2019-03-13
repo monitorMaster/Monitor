@@ -19,10 +19,9 @@ namespace twpx
         int i = 0;//当前所选位置
         Boolean isFullScreen = false;//标记是否全屏
         SqlSugarClient db = SugarDao.GetInstance();
-        //公共类
-        Common Scommon = new Common(); 
-        //存储pictureBox
-        List<PictureBox> pictureBoxList = new List<PictureBox>();
+        Common Scommon = new Common(); //公共类
+        List<PictureBox> pictureBoxList = new List<PictureBox>(); //存储pictureBox
+
         public Screen()
         {
             InitializeComponent();//初始化
@@ -74,21 +73,19 @@ namespace twpx
 
         public void LoadData()
         {
-            Console.WriteLine("链表长度=" + Scommon.GetCount());
             listView1.Items.Clear();
             var list = Scommon.GetCL();
 
             for(int i=0; i<Scommon.GetCount(); i++)
             {
-                Console.WriteLine(Scommon.getIp(i));
+                Console.WriteLine(Scommon.GetIp(i));
                 ListViewItem item = new ListViewItem();
                 item.Text = i.ToString();
-                item.SubItems.Add(Scommon.getIp(i));
+                item.SubItems.Add(Scommon.GetIp(i));
                 listView1.Items.Add(item);
             }
             //初始化pictureBox链表
             addPictureBox();
-            
         }
 
         private void Screen_Load(object sender, EventArgs e)
@@ -125,7 +122,6 @@ namespace twpx
             }
         }
 
-
         //把所有pictureBox属性Visible设置为false
         private void setVisibleToFalse()
         {
@@ -134,15 +130,15 @@ namespace twpx
                 this.pictureBoxList[i].Visible = false;
             }
         }
-
+        //列表选择触发
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(listView1.SelectedItems.Count == 1)
             {
                 setVisibleToFalse();
                 this.pictureBox1.Visible = true;
-                if (i == Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text)) return;//这次选择的和上次一样
-                i = Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text);
+                if (i == Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text)) return;//这次选择的和上次一样
+                i = Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text);
                 Scommon.Privew(i - 1, pictureBox1);
             }
             
@@ -182,9 +178,9 @@ namespace twpx
         private void button2_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count != 1) return;//只能选择一个预览
-            Console.WriteLine(Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text)); 
-            if (Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text) == 0) return;
-            i = Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text);
+            Console.WriteLine(Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text)); 
+            if (Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text) == 0) return;
+            i = Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text);
             Scommon.Record(i - 1);
         }
         //测试直接录像
@@ -197,16 +193,16 @@ namespace twpx
         private void button3_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count != 1) return;//只能选择一个预览
-            if (i == Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text)) return;//这次选择的和上次一样
-            i = Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text);
+            if (i == Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text)) return;//这次选择的和上次一样
+            i = Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text);
             Scommon.GetJPEG(i - 1);
         }
         //抓图BMP
         private void button4_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count != 1) return;//只能选择一个预览
-            if (i == Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text)) return;//这次选择的和上次一样
-            i = Scommon.getCamera(this.listView1.SelectedItems[0].SubItems[1].Text);
+            if (i == Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text)) return;//这次选择的和上次一样
+            i = Scommon.GetCamera(this.listView1.SelectedItems[0].SubItems[1].Text);
             Scommon.GetBMP(i - 1);
         }
         //退出

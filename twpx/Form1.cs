@@ -173,7 +173,7 @@ namespace twpx
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Fcommon.allRecord();
+            Fcommon.AllRecord();
         }
     }
 }

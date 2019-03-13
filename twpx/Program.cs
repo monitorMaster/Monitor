@@ -16,11 +16,11 @@ namespace twpx
         static void Main()
         {
             Common Pcommon = new Common();
-            Pcommon.initLog();
+            Pcommon.InitLog();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-            Pcommon.saveLog();
+            Pcommon.SaveLog();
         }
 
 

@@ -66,7 +66,7 @@ namespace twpx
                         this.listView1.SelectedItems[i].SubItems[4].Text);
                         try
                         {
-                            Dcommon.addCL(camera);
+                            Dcommon.AddCL(camera);
                             this.listView1.SelectedItems[i].SubItems[5].Text = "在线";
                         }
                         catch (Exception ex)
@@ -76,10 +76,10 @@ namespace twpx
                     }
                     else//设备在线就注销
                     {
-                        count = Dcommon.getCamera(this.listView1.SelectedItems[i].SubItems[1].Text);
+                        count = Dcommon.GetCamera(this.listView1.SelectedItems[i].SubItems[1].Text);
                         try
                         {
-                            Dcommon.removeCLByI(count - 1);
+                            Dcommon.RemoveCLByI(count - 1);
                             this.listView1.SelectedItems[i].SubItems[5].Text = "离线";
                         }
                         catch (Exception ex)
@@ -102,7 +102,7 @@ namespace twpx
         {
             for(int i=0; i<Dcommon.GetCount(); i++)
             {
-                if(Dcommon.getAlarmHandle(i) < 0)
+                if(Dcommon.GetAlarmHandle(i) < 0)
                 {
                     setAlarm();
                 }
@@ -163,15 +163,10 @@ namespace twpx
                 item.SubItems.Add(i.user);
                 item.SubItems.Add(i.pwd);
                 //自动登录
-                Console.WriteLine("ip = " + i.ip + "\nport = " + i.port + "\nusername = " + i.user + "\npwd = " + i.pwd);
-                try
+                //Console.WriteLine("ip = " + i.ip + "\nport = " + i.port + "\nusername = " + i.user + "\npwd = " + i.pwd);
+                if(Dcommon.AddCL(i.ip, Convert.ToInt16(i.port), i.user, i.pwd))
                 {
-                    Dcommon.addCL(i.ip, Convert.ToInt16(i.port), i.user, i.pwd);
                     i.setStatus();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
                 }
                 item.SubItems.Add(i.getStatus());
                 listView1.Items.Add(item);
@@ -227,18 +222,18 @@ namespace twpx
 
             for (int i = 0; i < Dcommon.GetCount(); i++)
             {
-                Dcommon.setAlarm(i, struAlarmParam);
-                m_lAlarmHandle = Dcommon.getAlarmHandle(i);
+                Dcommon.SetAlarm(i, struAlarmParam);
+                m_lAlarmHandle = Dcommon.GetAlarmHandle(i);
                 if (m_lAlarmHandle < 0)
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     strErr = "布防失败，错误号：" + iLastErr; //布防失败，输出错误号
-                    Dcommon.addLog(strErr);
+                    Dcommon.AddLog(strErr);
                 }
                 else
                 {
                     strErr = "布防成功";
-                    Dcommon.addLog(strErr);
+                    Dcommon.AddLog(strErr);
                     MessageBox.Show(strErr);
                 }
                 //btn_SetAlarm.Enabled = false;
@@ -252,25 +247,25 @@ namespace twpx
             {
                 if (m_lAlarmHandle >= 0)
                 {
-                    if (!Dcommon.closeAlarm(i))
+                    if (!Dcommon.CloseAlarm(i))
                     {
                         iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                         strErr = "撤防失败，错误号：" + iLastErr; //撤防失败，输出错误号
-                        Dcommon.addLog(strErr);
+                        Dcommon.AddLog(strErr);
                     }
                     else
                     {
                         strErr = "撤防成功";
                         MessageBox.Show(strErr);
-                        Dcommon.addLog(strErr);
-                        Dcommon.setAlarmHandle(i, -1);
+                        Dcommon.AddLog(strErr);
+                        Dcommon.SetAlarmHandle(i, -1);
                     }
                 }
                 else
                 {
                     strErr = "未布防";
                     MessageBox.Show(strErr);
-                    Dcommon.addLog(strErr);
+                    Dcommon.AddLog(strErr);
                 }
             }
             //btn_SetAlarm.Enabled = true;

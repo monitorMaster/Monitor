@@ -111,14 +111,14 @@ namespace NVRCsharpDemo
         }
 
         //设备登录
-        public void login()
+        public bool login()
         {
             UserID = CHCNetSDK.NET_DVR_Login_V30(ip, port, username, password, ref DeviceInfo);
             if (UserID < 0)
             {
                 iLastErr = CHCNetSDK.NET_DVR_GetLastError();
-                //Console.WriteLine("iLastErr = " + iLastErr);
-                Ccommon.addLog("iLastErr = " + iLastErr);
+                Ccommon.AddLog("iLastErr = " + iLastErr);
+                return false;
             }
             else
             {
@@ -141,7 +141,8 @@ namespace NVRCsharpDemo
                     // MessageBox.Show("This device has no IP channel!");
                 }
 
-                Ccommon.addLog("登录成功");
+                Ccommon.AddLog("登录成功");
+                return true;
             }
         }
 
@@ -240,11 +241,6 @@ namespace NVRCsharpDemo
             Marshal.FreeHGlobal(ptrIpParaCfgV40);
         }
 
-        internal void setM_lAlarmHandle(object p)
-        {
-            throw new NotImplementedException();
-        }
-
         //
         public void deviceListIPChannel(Int32 iChanNo, byte byOnline, int byIPID)
         {
@@ -290,20 +286,22 @@ namespace NVRCsharpDemo
         }
 
         //实时预览
-        public void realPlay(PictureBox pictureBox)
+        public bool realPlay(PictureBox pictureBox)
         {
            
             // 检查设备登录状态
             if (UserID < 0)
             {
                 MessageBox.Show("请先登录设备!");
-                return;
+                Ccommon.AddLog("请先登录设备!");
+                return false;
             }
             // 检查录像状态
             if (m_bRecord)
             {
-                //MessageBox.Show("请先停止录像!");
-                return;
+                MessageBox.Show("请先停止录像!");
+                Ccommon.AddLog("请先停止录像!");
+                return false;
             }
             if (m_lRealHandle < 0)
             {
@@ -341,30 +339,33 @@ namespace NVRCsharpDemo
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     string str = "预览失败，输出错误号: " + iLastErr; //预览失败，输出错误号 failed to start live view, and output the error code.
                     //MessageBox.Show(str);
-                    Ccommon.addLog(str);
-                    return;
+                    Ccommon.AddLog(str);
+                    return false;
                 }
                 else
                 {
                     //MessageBox.Show("预览成功");
-                    Ccommon.addLog(str);
-                    return;
+                    Ccommon.AddLog(str);
+                    return true;
                 }
             }
+            return true;
 
         }
         //无参预览
-        public void realPlay()
+        public bool realPlay()
         {
             // 检查设备登录状态
             if (UserID < 0)
             {
-                MessageBox.Show("请先登录设备!");
+                Ccommon.AddLog("请先登录设备!");
+                return false;
             }
             // 检查录像状态
             if (m_bRecord)
             {
-                MessageBox.Show("请先停止录像!");
+                Ccommon.AddLog("请先停止录像!");
+                return false;
             }
             if (m_lRealHandle < 0)
             {
@@ -402,12 +403,16 @@ namespace NVRCsharpDemo
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     string str = "预览失败，输出错误号: " + iLastErr; //预览失败，输出错误号 failed to start live view, and output the error code.
                     MessageBox.Show(str);
+                    return false;
                 }
                 else
                 {
                     MessageBox.Show("预览成功");
+                    return true;
                 }
             }
+            return true;
+
         }
         
         //停止预览
@@ -709,22 +714,22 @@ namespace NVRCsharpDemo
         }
 
         //设置布防句柄
-        public void setM_lAlarmHandle(Int32 AlarmHandle)
+        public void SetM_lAlarmHandle(Int32 AlarmHandle)
         {
             m_lAlarmHandle = AlarmHandle;
         }
         //返回布防句柄
-        public Int32 getM_lAlarmHandle()
+        public Int32 GetM_lAlarmHandle()
         {
             return m_lAlarmHandle;
         }
         //布防
-        public void setAlarm(CHCNetSDK.NET_DVR_SETUPALARM_PARAM struAlarmParam)
+        public void SetAlarm(CHCNetSDK.NET_DVR_SETUPALARM_PARAM struAlarmParam)
         {
             m_lAlarmHandle = CHCNetSDK.NET_DVR_SetupAlarmChan_V41(UserID, ref struAlarmParam);
         }
         //撤防
-        public bool closeAlarm()
+        public bool CloseAlarm()
         {
             if(m_lAlarmHandle >= 0)
             {
@@ -832,7 +837,6 @@ namespace NVRCsharpDemo
             }
         }
         //关闭监听
-        */
         private void stopListen()
         {
             if (!CHCNetSDK.NET_DVR_StopListen_V30(iListenHandle))
@@ -848,6 +852,7 @@ namespace NVRCsharpDemo
                 btnStartListen.Enabled = true;
             }
         }
+        */
 
     }
 }
