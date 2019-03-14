@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using twpx.VIew;
 
 namespace twpx
 {
@@ -19,7 +20,8 @@ namespace twpx
             Pcommon.InitLog();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Application.Run(new Form1());
+            Application.Run(new LoginForm());
             Pcommon.SaveLog();
         }
 
