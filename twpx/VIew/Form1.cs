@@ -1,57 +1,23 @@
-﻿using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
-using twpx.Dao;
-using twpx.Model;
 using NVRCsharpDemo;
 using System.Diagnostics;
-using System.Timers;
 
 namespace twpx
 {
     public partial class Form1 : Form
     {
-
-        public bool m_bInitSDK = false;
         Common Fcommon = new Common();
+        private long timeCount = 0;
 
         public Form1()
         {
             InitializeComponent();
-            m_bInitSDK = CHCNetSDK.NET_DVR_Init();//返回bool类型
-            if (m_bInitSDK == false)
-            {
-                MessageBox.Show("NET_DVR_Init error!");
-                Console.WriteLine("NET_DVR_Init error!");
-                return;
-            }
-            else
-            {
-                //保存SDK日志 To save the SDK log
-                CHCNetSDK.NET_DVR_SetLogToFile(3, "D:\\SdkLog\\", true);
-
-            }
-            //SqlSugarClient db = SugarDao.GetInstance();
-            //var list = db.Queryable<Device>().ToList();
-
+            timer1.Start();
+            Fcommon.AddLog("timer1计时器开启");
         }
-        /*
-        //计时触发函数 保存录像
-        private static void TimedEvent(object source, ElapsedEventArgs e)
-        {
-            for (int i = 0; i < Fcommon.GetCount(); i++)
-            {
-                if
-            }
-        }
-        */
+
+        
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
@@ -173,7 +139,13 @@ namespace twpx
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Fcommon.AllRecord();
+            if (timeCount == 10)
+            {
+                timer1.Stop();
+                Fcommon.AddLog("timer1停止");
+            }
+            Console.WriteLine("Now time is " + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"));
+            timeCount++;
         }
     }
 }

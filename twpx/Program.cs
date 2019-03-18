@@ -17,12 +17,14 @@ namespace twpx
         static void Main()
         {
             Common Pcommon = new Common();
-            Pcommon.InitLog();
+            Pcommon.InitLog();//初始化日志
+            Pcommon.InitSDK();//初始化SDK
+            Pcommon.LoadData();//读取设备信息并登录
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
             Application.Run(new LoginForm());
-            Pcommon.SaveLog();
+            Pcommon.cleanSDK();//注销SDK
+            Pcommon.SaveLog();//保存日志
         }
 
 

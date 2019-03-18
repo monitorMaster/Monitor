@@ -35,6 +35,8 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -61,7 +63,9 @@
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5,
-            this.columnHeader6});
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(14, 156);
@@ -74,31 +78,42 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "编号";
+            this.columnHeader1.Text = "id";
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "IP地址";
-            this.columnHeader2.Width = 226;
+            this.columnHeader2.Text = "编号";
+            this.columnHeader2.Width = 128;
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "端口号";
+            this.columnHeader3.Text = "设备名称";
+            this.columnHeader3.Width = 200;
             // 
             // columnHeader4
             // 
-            this.columnHeader4.Text = "用户名";
-            this.columnHeader4.Width = 189;
+            this.columnHeader4.Text = "IP";
+            this.columnHeader4.Width = 150;
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "密码";
-            this.columnHeader5.Width = 226;
+            this.columnHeader5.Text = "端口号";
+            this.columnHeader5.Width = 100;
             // 
             // columnHeader6
             // 
-            this.columnHeader6.Text = "状态";
-            this.columnHeader6.Width = 92;
+            this.columnHeader6.Text = "用户名";
+            this.columnHeader6.Width = 128;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "密码";
+            this.columnHeader7.Width = 128;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "状态";
+            this.columnHeader8.Width = 80;
             // 
             // button1
             // 
@@ -297,5 +312,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
     }
 }

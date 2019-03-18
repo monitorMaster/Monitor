@@ -18,6 +18,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for admin
 -- ----------------------------
+
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -32,6 +33,7 @@ CREATE TABLE `admin` (
 -- ----------------------------
 -- Table structure for building
 -- ----------------------------
+
 DROP TABLE IF EXISTS `building`;
 CREATE TABLE `building` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -45,8 +47,10 @@ CREATE TABLE `building` (
 -- ----------------------------
 -- Table structure for camera
 -- ----------------------------
-DROP TABLE IF EXISTS `camera`;
-CREATE TABLE `camera` (
+
+DROP TABLE IF EXISTS `device`;
+use video;
+CREATE TABLE `device` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lid` int(11) NOT NULL,
   `lname` varchar(18) NOT NULL,
@@ -56,10 +60,15 @@ CREATE TABLE `camera` (
   `password` varchar(18) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+use video;
+INSERT INTO `device` VALUES ('1','131','1教131门口摄像头', '123.111.112.232', '554', 'admin', 'admin');
+INSERT INTO `device` VALUES ('2','131','1教131内部摄像头1', '111.213.323.123', '32', 'admin', 'adsadasd');
+INSERT INTO `device` values ('3','131','1教131内部摄像头2','192.168.1.100','8000','admin','lab12345678');
 
 -- ----------------------------
 -- Table structure for lab
 -- ----------------------------
+
 DROP TABLE IF EXISTS `lab`;
 CREATE TABLE `lab` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -73,6 +82,7 @@ CREATE TABLE `lab` (
 -- ----------------------------
 -- Table structure for record
 -- ----------------------------
+
 DROP TABLE IF EXISTS `record`;
 CREATE TABLE `record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -87,6 +97,7 @@ CREATE TABLE `record` (
 -- ----------------------------
 -- Table structure for sadmin
 -- ----------------------------
+use video;
 DROP TABLE IF EXISTS `sadmin`;
 CREATE TABLE `sadmin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

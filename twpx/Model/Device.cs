@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace twpx.Model
+﻿namespace twpx.Model
 {
     class Device
     {
         public string id
+        {
+            get;
+            set;
+        }
+        public string lid
+        {
+            get;
+            set;
+        }
+        public string lname
         {
             get;
             set;
@@ -23,12 +27,12 @@ namespace twpx.Model
             get;
             set;
         }
-        public string user
+        public string username
         {
             get;
             set;
         }
-        public string pwd
+        public string password
         {
             get;
             set;
@@ -39,11 +43,11 @@ namespace twpx.Model
         {
             if (status.Equals("离线"))
             {
-                this.status = "在线";
+                status = "在线";
             }
             else
             {
-                this.status = "离线";
+                status = "离线";
             }
         }
 

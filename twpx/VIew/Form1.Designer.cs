@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label label1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -46,6 +47,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -62,9 +64,9 @@
             label1.BackColor = System.Drawing.SystemColors.Window;
             label1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             label1.Font = new System.Drawing.Font("宋体", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            label1.Location = new System.Drawing.Point(174, 113);
+            label1.Location = new System.Drawing.Point(196, 136);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(621, 28);
+            label1.Size = new System.Drawing.Size(729, 33);
             label1.TabIndex = 2;
             label1.Text = "欢迎来到杭州电子科技大学智慧实验室监控系统\r\n";
             label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -83,7 +85,8 @@
             this.监控预览ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1010, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1136, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -94,21 +97,21 @@
             this.一键报警ToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.一键报警ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("一键报警ToolStripMenuItem.Image")));
             this.一键报警ToolStripMenuItem.Name = "一键报警ToolStripMenuItem";
-            this.一键报警ToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
+            this.一键报警ToolStripMenuItem.Size = new System.Drawing.Size(116, 29);
             this.一键报警ToolStripMenuItem.Text = "一键报警";
             this.一键报警ToolStripMenuItem.Click += new System.EventHandler(this.一键报警ToolStripMenuItem_Click);
             // 
             // 设备管理ToolStripMenuItem
             // 
             this.设备管理ToolStripMenuItem.Name = "设备管理ToolStripMenuItem";
-            this.设备管理ToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.设备管理ToolStripMenuItem.Size = new System.Drawing.Size(94, 29);
             this.设备管理ToolStripMenuItem.Text = "设备管理";
             this.设备管理ToolStripMenuItem.Click += new System.EventHandler(this.设备管理ToolStripMenuItem_Click);
             // 
             // 监控预览ToolStripMenuItem
             // 
             this.监控预览ToolStripMenuItem.Name = "监控预览ToolStripMenuItem";
-            this.监控预览ToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.监控预览ToolStripMenuItem.Size = new System.Drawing.Size(94, 29);
             this.监控预览ToolStripMenuItem.Text = "监控预览";
             this.监控预览ToolStripMenuItem.Click += new System.EventHandler(this.监控预览ToolStripMenuItem_Click);
             // 
@@ -118,9 +121,10 @@
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Image = global::twpx.Properties.Resources.timg__1_;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 28);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 33);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1010, 612);
+            this.pictureBox1.Size = new System.Drawing.Size(1136, 735);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -130,9 +134,10 @@
             // 
             this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox3.Location = new System.Drawing.Point(0, 606);
+            this.pictureBox3.Location = new System.Drawing.Point(0, 727);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(1010, 34);
+            this.pictureBox3.Size = new System.Drawing.Size(1136, 41);
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
             // 
@@ -140,9 +145,10 @@
             // 
             this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox4.Location = new System.Drawing.Point(0, 570);
+            this.pictureBox4.Location = new System.Drawing.Point(0, 684);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(1010, 40);
+            this.pictureBox4.Size = new System.Drawing.Size(1136, 48);
             this.pictureBox4.TabIndex = 3;
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
@@ -151,26 +157,29 @@
             // 
             this.pictureBox6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.BackgroundImage")));
             this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox6.Location = new System.Drawing.Point(0, 30);
+            this.pictureBox6.Location = new System.Drawing.Point(0, 36);
+            this.pictureBox6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(1010, 34);
+            this.pictureBox6.Size = new System.Drawing.Size(1136, 41);
             this.pictureBox6.TabIndex = 3;
             this.pictureBox6.TabStop = false;
             // 
             // pictureBox8
             // 
             this.pictureBox8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox8.BackgroundImage")));
-            this.pictureBox8.Location = new System.Drawing.Point(0, 1067);
+            this.pictureBox8.Location = new System.Drawing.Point(0, 1280);
+            this.pictureBox8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(1010, 10);
+            this.pictureBox8.Size = new System.Drawing.Size(1136, 12);
             this.pictureBox8.TabIndex = 3;
             this.pictureBox8.TabStop = false;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(143, 178);
+            this.button1.Location = new System.Drawing.Point(161, 214);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(110, 53);
+            this.button1.Size = new System.Drawing.Size(124, 64);
             this.button1.TabIndex = 4;
             this.button1.Text = "录像回放";
             this.button1.UseVisualStyleBackColor = true;
@@ -178,9 +187,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(291, 178);
+            this.button2.Location = new System.Drawing.Point(327, 214);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(128, 53);
+            this.button2.Size = new System.Drawing.Size(144, 64);
             this.button2.TabIndex = 5;
             this.button2.Text = "摄像头管理";
             this.button2.UseVisualStyleBackColor = true;
@@ -188,9 +198,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(444, 178);
+            this.button3.Location = new System.Drawing.Point(500, 214);
+            this.button3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(128, 53);
+            this.button3.Size = new System.Drawing.Size(144, 64);
             this.button3.TabIndex = 5;
             this.button3.Text = "监控预览";
             this.button3.UseVisualStyleBackColor = true;
@@ -198,9 +209,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(612, 178);
+            this.button4.Location = new System.Drawing.Point(688, 214);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(128, 53);
+            this.button4.Size = new System.Drawing.Size(144, 64);
             this.button4.TabIndex = 5;
             this.button4.Text = "录像管理";
             this.button4.UseVisualStyleBackColor = true;
@@ -208,38 +220,47 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(130, 286);
+            this.button5.Location = new System.Drawing.Point(146, 343);
+            this.button5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(139, 69);
+            this.button5.Size = new System.Drawing.Size(156, 83);
             this.button5.TabIndex = 6;
             this.button5.Text = "普通管理员管理";
             this.button5.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(332, 299);
+            this.button6.Location = new System.Drawing.Point(374, 359);
+            this.button6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(137, 56);
+            this.button6.Size = new System.Drawing.Size(154, 67);
             this.button6.TabIndex = 7;
             this.button6.Text = "教学楼管理";
             this.button6.UseVisualStyleBackColor = true;
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(526, 286);
+            this.button7.Location = new System.Drawing.Point(592, 343);
+            this.button7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(137, 69);
+            this.button7.Size = new System.Drawing.Size(154, 83);
             this.button7.TabIndex = 8;
             this.button7.Text = "实验室管理";
             this.button7.UseVisualStyleBackColor = true;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 6000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1010, 640);
+            this.ClientSize = new System.Drawing.Size(1136, 768);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -256,6 +277,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "杭电智慧实验室监控系统";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -289,6 +311,7 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

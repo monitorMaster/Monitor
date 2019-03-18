@@ -1,12 +1,5 @@
 ﻿using SqlSugar;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using twpx.Dao;
 using twpx.Model;
@@ -15,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace twpx
 {
-    
+
     public partial class Devices : Form
     {
         SqlSugarClient db = SugarDao.GetInstance();
@@ -44,6 +37,15 @@ namespace twpx
             InitializeComponent();
             LoadData();
         }
+        //注释函数
+        public void DebugInfo(string str)
+        {
+            if (str.Length > 0)
+            {
+                str += "\n";
+                textBox5.AppendText(str);
+            }
+        }
 
         //登录、注销设备
         private void button4_Click(object sender, EventArgs e)
@@ -60,14 +62,16 @@ namespace twpx
                     ip = this.listView1.SelectedItems[i].SubItems[5].Text;
                     if (ip.Equals("离线"))//如果设备离线就登录
                     {
-                        camera = new Camera(this.listView1.SelectedItems[i].SubItems[1].Text,
-                        Convert.ToInt16(this.listView1.SelectedItems[i].SubItems[2].Text),
-                        this.listView1.SelectedItems[i].SubItems[3].Text,
-                        this.listView1.SelectedItems[i].SubItems[4].Text);
+                        camera = new Camera(listView1.SelectedItems[i].SubItems[1].Text,//lid
+                            listView1.SelectedItems[i].SubItems[2].Text,//lname
+                            listView1.SelectedItems[i].SubItems[3].Text,//ip
+                            Convert.ToInt16(listView1.SelectedItems[i].SubItems[4].Text),//port
+                            listView1.SelectedItems[i].SubItems[5].Text,//username
+                            listView1.SelectedItems[i].SubItems[6].Text);//password
                         try
                         {
                             Dcommon.AddCL(camera);
-                            this.listView1.SelectedItems[i].SubItems[5].Text = "在线";
+                            listView1.SelectedItems[i].SubItems[5].Text = "在线";
                         }
                         catch (Exception ex)
                         {
@@ -76,11 +80,11 @@ namespace twpx
                     }
                     else//设备在线就注销
                     {
-                        count = Dcommon.GetCamera(this.listView1.SelectedItems[i].SubItems[1].Text);
+                        count = Dcommon.GetCamera(listView1.SelectedItems[i].SubItems[1].Text);
                         try
                         {
                             Dcommon.RemoveCLByI(count - 1);
-                            this.listView1.SelectedItems[i].SubItems[5].Text = "离线";
+                            listView1.SelectedItems[i].SubItems[5].Text = "离线";
                         }
                         catch (Exception ex)
                         {
@@ -112,10 +116,12 @@ namespace twpx
                 }
             }
         }
-
+        
         //添加设备
         private void button1_Click(object sender, EventArgs e)
         {
+            string lid = "131";
+            string lname = "1教131摄像头";
             string ip = textBox1.Text.Trim();
             string port = textBox2.Text.Trim();
             string user = textBox3.Text.Trim();
@@ -126,23 +132,26 @@ namespace twpx
                 return;
             }
             Device device = new Device();
+            device.lid = lid;
+            device.lname = lname;
             device.ip = ip;
             device.port = port;
-            device.user = user;
-            device.pwd = pwd;
+            device.username = user;
+            device.password = pwd;
             try
             {
                 var t2 = db.Insertable(device).ExecuteCommand();
-                Console.WriteLine("添加{0}个设备。", t2);
+                DebugInfo("添加" + t2 + "个设备。");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                DebugInfo(ex.Message);
             }
             
             LoadData();
         }
-
+        //字符串测试文本是否为空
         public bool TextIsNull(string s)
         {
             if (s.Equals("") || s == "") return true;
@@ -152,26 +161,27 @@ namespace twpx
         //读取设备信息
         public void LoadData()
         {
+
             listView1.Items.Clear();
             var list = db.Queryable<Device>().ToList();
             foreach (var i in list)
             {
                 ListViewItem item = new ListViewItem();
                 item.Text = i.id;
+                item.SubItems.Add(i.lid);
+                item.SubItems.Add(i.lname);
                 item.SubItems.Add(i.ip);
                 item.SubItems.Add(i.port);
-                item.SubItems.Add(i.user);
-                item.SubItems.Add(i.pwd);
+                item.SubItems.Add(i.username);
+                item.SubItems.Add(i.password);
                 //自动登录
                 //Console.WriteLine("ip = " + i.ip + "\nport = " + i.port + "\nusername = " + i.user + "\npwd = " + i.pwd);
-                if(Dcommon.AddCL(i.ip, Convert.ToInt16(i.port), i.user, i.pwd))
+                if(Dcommon.AddCL(i.lid,i.lname,i.ip, Convert.ToInt16(i.port), i.username, i.password))
                 {
                     i.setStatus();
                 }
                 item.SubItems.Add(i.getStatus());
                 listView1.Items.Add(item);
-
-
             }
         }
 
@@ -195,7 +205,7 @@ namespace twpx
                     i.Remove();
                 }
                 var t4 = db.Deleteable<Device>().In(ids).ExecuteCommand();
-                Console.WriteLine("移除{0}个设备。",t4);
+                DebugInfo("移除" + t4 + "个设备。");
             }
         }
 

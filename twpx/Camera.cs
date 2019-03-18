@@ -10,6 +10,8 @@ namespace NVRCsharpDemo
 {
     class Camera
     {
+        private string lid;//设备编号
+        private string lname;//设备名称
         private string ip; //设备IP地址或者域名 Device IP
         Int16 port;//设备服务端口号 Device Port
         private string username;
@@ -17,6 +19,7 @@ namespace NVRCsharpDemo
         private bool m_bRecord = false; //录像标志
         private Int32 UserID = -1; //-1表示失败，其他值表示返回的用户ID值。该用户ID具有唯一性，后续对设备的操作都需要通过此ID实现。
         private Int32 m_lRealHandle=-1;//-1表示失败，其他值作为NET_DVR_StopRealPlay等函数的句柄参数
+        private Int32 m_lVirtualHandle = -1;//代表无参预览返回的参数
         private uint dwAChanTotalNum; //设备模拟通道个数，数字（IP）通道最大个数为byIPChanNum + byHighDChanNum*256 
         private uint dwDChanTotalNum;//设备最大数字通道个数，低8位，高8位见byHighDChanNum
         private uint iLastErr = 0; // 用于接收调用NET_DVR_GetLastError获取的错误码
@@ -54,6 +57,8 @@ namespace NVRCsharpDemo
         
 
         public Camera(){
+            lid = "131";
+            lname = "1教131门口摄像头";
             ip = "192.168.1.107";
             port = 8000;
             username = "admin";
@@ -61,18 +66,15 @@ namespace NVRCsharpDemo
             //login();
         }
 
-        public Camera(string ip,Int16 port,string username,string password)
+        public Camera(string lid,string lname,string ip,Int16 port,string username,string password)
         {
+            this.lid = lid;
+            this.lname = lname;
             this.ip = ip;
             this.port = port;
             this.username = username;
             this.password = password;
             //login();
-        }
-
-        ~Camera()
-        {
-            logout();
         }
 
         //监听布防初始化
@@ -123,8 +125,8 @@ namespace NVRCsharpDemo
             else
             {
                 //登录成功
-                dwAChanTotalNum = (uint)DeviceInfo.byChanNum;
-                dwDChanTotalNum = (uint)DeviceInfo.byIPChanNum + 256 * (uint)DeviceInfo.byHighDChanNum;
+                dwAChanTotalNum = DeviceInfo.byChanNum;
+                dwDChanTotalNum = DeviceInfo.byIPChanNum + 256 * (uint)DeviceInfo.byHighDChanNum;
                 if (dwDChanTotalNum > 0)
                 {
                     deviceInfoIPChannel();
@@ -134,21 +136,22 @@ namespace NVRCsharpDemo
                     for (i = 0; i < dwAChanTotalNum; i++)
                     {
                         deviceListAnalogChannel(i + 1, 1);
-                        iChannelNum[i] = i + (int)DeviceInfo.byStartChan;
+                        iChannelNum[i] = i + DeviceInfo.byStartChan;
                     }
-
-                    //comboBoxView.SelectedItem = 1;
-                    // MessageBox.Show("This device has no IP channel!");
                 }
 
                 Ccommon.AddLog("登录成功");
                 return true;
             }
         }
-
         //设备注销
-        public void logout()
+        public bool logout()
         {
+            if (m_bRecord)
+            {
+                Ccommon.AddLog("请先停止录像");
+                return false;
+            }
             if (m_lRealHandle >= 0)
             {
                 CHCNetSDK.NET_DVR_StopRealPlay(m_lRealHandle);
@@ -158,7 +161,9 @@ namespace NVRCsharpDemo
             {
                 CHCNetSDK.NET_DVR_Logout(UserID);
                 UserID = -1;
+                return true;
             }
+            return false;
         }
 
         //ip通道配置
@@ -240,7 +245,6 @@ namespace NVRCsharpDemo
             }
             Marshal.FreeHGlobal(ptrIpParaCfgV40);
         }
-
         //
         public void deviceListIPChannel(Int32 iChanNo, byte byOnline, int byIPID)
         {
@@ -264,7 +268,6 @@ namespace NVRCsharpDemo
             //listViewIPChannel.Items.Add(new ListViewItem(new string[] { str1, str2 }));将通道添加到列表中 add the channel to the list
 
         }
-
         //
         public void deviceListAnalogChannel(Int32 iChanNo, byte byEnable)
         {
@@ -292,20 +295,18 @@ namespace NVRCsharpDemo
             // 检查设备登录状态
             if (UserID < 0)
             {
-                MessageBox.Show("请先登录设备!");
                 Ccommon.AddLog("请先登录设备!");
                 return false;
             }
             // 检查录像状态
             if (m_bRecord)
             {
-                MessageBox.Show("请先停止录像!");
                 Ccommon.AddLog("请先停止录像!");
                 return false;
             }
+            
             if (m_lRealHandle < 0)
             {
-
                 //预览参数结构体。
                 CHCNetSDK.NET_DVR_PREVIEWINFO lpPreviewInfo = new CHCNetSDK.NET_DVR_PREVIEWINFO();
 
@@ -329,31 +330,43 @@ namespace NVRCsharpDemo
                 IntPtr pUser = IntPtr.Zero;//用户数据 user data 
                 //打开预览 Start live view 
                 //[in] NET_DVR_Login_V40等登录接口的返回值 ,[in] 预览参数 ,[in] 码流数据回调函数,[in] 用户数据 
-
                 m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V40(UserID, ref lpPreviewInfo, null/*RealData*/, pUser);
-
-                //Console.WriteLine(m_lRealHandle);
-
                 if (m_lRealHandle < 0)
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     string str = "预览失败，输出错误号: " + iLastErr; //预览失败，输出错误号 failed to start live view, and output the error code.
-                    //MessageBox.Show(str);
                     Ccommon.AddLog(str);
                     return false;
                 }
                 else
                 {
-                    //MessageBox.Show("预览成功");
-                    Ccommon.AddLog(str);
+                    Ccommon.AddLog(" " + ip + ": 预览成功");
                     return true;
                 }
             }
             return true;
-
+        }
+        //停止预览
+        public bool stopPlay()
+        {
+            if (m_lRealHandle < 0)
+            {
+                return true;
+            }
+            if (!CHCNetSDK.NET_DVR_StopRealPlay(m_lRealHandle))
+            {
+                iLastErr = CHCNetSDK.NET_DVR_GetLastError();
+                string str = "NET_DVR_StopRealPlay failed, error code= " + iLastErr + ", IP = " + ip;
+                Ccommon.AddLog(str);
+                return false;
+            }
+            Ccommon.AddLog("停止预览成功!");
+            m_lRealHandle = -1;
+            //pictureBox.Invalidate();//刷新窗口 refresh the window
+            return true;
         }
         //无参预览
-        public bool realPlay()
+        public bool realVirtualPlay()
         {
             // 检查设备登录状态
             if (UserID < 0)
@@ -367,7 +380,7 @@ namespace NVRCsharpDemo
                 Ccommon.AddLog("请先停止录像!");
                 return false;
             }
-            if (m_lRealHandle < 0)
+            if (m_lVirtualHandle < 0)
             {
 
                 //预览参数结构体。
@@ -394,111 +407,125 @@ namespace NVRCsharpDemo
                 //打开预览 Start live view 
                 //[in] NET_DVR_Login_V40等登录接口的返回值 ,[in] 预览参数 ,[in] 码流数据回调函数,[in] 用户数据 
 
-                m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V40(UserID, ref lpPreviewInfo, null/*RealData*/, pUser);
+                m_lVirtualHandle = CHCNetSDK.NET_DVR_RealPlay_V40(UserID, ref lpPreviewInfo, null/*RealData*/, pUser);
 
-                Console.WriteLine(m_lRealHandle);
-
-                if (m_lRealHandle < 0)
+                if (m_lVirtualHandle < 0)
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     string str = "预览失败，输出错误号: " + iLastErr; //预览失败，输出错误号 failed to start live view, and output the error code.
-                    MessageBox.Show(str);
+                    Ccommon.AddLog(str);
                     return false;
                 }
                 else
                 {
-                    MessageBox.Show("预览成功");
+                    Ccommon.AddLog(" " + ip + ": 无参预览成功");
                     return true;
                 }
             }
             return true;
 
         }
-        
-        //停止预览
-        public void stopPlay()
+        //停止无参预览
+        public bool stopVirtualPlay()
         {
-            if (!CHCNetSDK.NET_DVR_StopRealPlay(m_lRealHandle))
+            if (m_lVirtualHandle < 0)
+            {
+                return true;
+            }
+            if (!CHCNetSDK.NET_DVR_StopRealPlay(m_lVirtualHandle))
             {
                 iLastErr = CHCNetSDK.NET_DVR_GetLastError();
-                string str = "NET_DVR_StopRealPlay failed, error code= " + iLastErr;
-                MessageBox.Show(str);
-                return;
+                string str = "NET_DVR_StopRealPlay failed, error code= " + iLastErr + ", IP = " + ip;
+                Ccommon.AddLog(str);
+                return false;
             }
-            MessageBox.Show("NET_DVR_StopRealPlay succ!");
-            m_lRealHandle = -1;
-            //pictureBox.Invalidate();刷新窗口 refresh the window
-            return;
+            Ccommon.AddLog("无参预览停止成功");
+            m_lVirtualHandle = -1;
+            return true;
         }
 
         //录像
         public string startRecord(string FileName)
         {
             //录像保存路径和文件名 the path and file name to save
-            string sVideoFileName = FileName;
-
-            
             if (m_bRecord == false)
             {
                 //强制I帧 Make a I frame
-                int lChannel = 1; //通道号 Channel number
-                
+                int lChannel = 1; //通道号 Channel number               
                 CHCNetSDK.NET_DVR_MakeKeyFrame(UserID, lChannel);
-
-
                 //开始录像 Start recording
-                if (!CHCNetSDK.NET_DVR_SaveRealData(m_lRealHandle, sVideoFileName))
+                if (!CHCNetSDK.NET_DVR_SaveRealData(m_lVirtualHandle, FileName))
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     string str = "NET_DVR_SaveRealData failed, error code= " + iLastErr;
-                    MessageBox.Show(str);
+                    Ccommon.AddLog(str);
                     return null;
                 }
                 else
                 {
-                    MessageBox.Show("Succeed to recording...");
+                    Ccommon.AddLog("Succeed to recording...");
                     m_bRecord = true;
-                    return sVideoFileName;
+                    return FileName;
                 }
             }
             else
             {
                 //停止录像 Stop recording
-                if (!CHCNetSDK.NET_DVR_StopSaveRealData(m_lRealHandle))
+                if (!CHCNetSDK.NET_DVR_StopSaveRealData(m_lVirtualHandle))
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     string str = "NET_DVR_StopSaveRealData failed, error code= " + iLastErr;
-                    MessageBox.Show(str);
+                    Ccommon.AddLog(str);
                     return null;
                 }
                 else
                 {
-                    string str = "Successful to stop recording and the saved file is " + sVideoFileName;
-                    MessageBox.Show(str);
+                    string str = "Successful to stop recording and the saved file is " + FileName;
+                    Ccommon.AddLog(str);
                     m_bRecord = false;
-                    return sVideoFileName;
+                    return FileName;
                 }
             }
         }
-
         //停止录像
         public void stopRecord()
         {
              
         }
+        //无窗口参录像
+        public string SaveRecord(string saveFile)
+        {
+            bool isRecord = m_bRecord;
+            if (!isRecord)//如果没在录像，启动预览
+            {
+                realVirtualPlay();
+            }
+            startRecord(saveFile);
+            if (isRecord)//如果正在录像，不停止无参预览
+                stopVirtualPlay();
+            return saveFile;
+        }
 
+        //获取编号
+        public string getLid()
+        {
+            return lid;
+        }
+        //获取设备名称
+        public string getLname()
+        {
+            return lname;
+        }
         //获取IP
         public string getIp()
         {
             return ip;
         }
-
         //获取端口号
         public Int16 getPort()
         {
             return port;
-        }
-        
+        }       
         //获取用户名
         public string getUserName()
         {
@@ -509,13 +536,11 @@ namespace NVRCsharpDemo
         {
             return password;
         }
-
         //获取userID
         public Int32 getUserID()
         {
             return UserID;
         }
-
         //获取m_bRecord
         public bool getBRecord()
         {
@@ -525,26 +550,13 @@ namespace NVRCsharpDemo
         //tostring()
         public void CameraToString()
         {
+            Console.WriteLine("Lid: " + getLid());
+            Console.WriteLine("Lname = " + getLname());
             Console.WriteLine("IP: " + getIp());
             Console.WriteLine("Port: " + getPort());
             Console.WriteLine("UserName: " + getUserName());
             Console.WriteLine("Password: " + getPassword());
             Console.WriteLine("UserID: " + getUserID());
-        }
-
-        //预览
-        public void Priview(PictureBox pictureBox)
-        {
-           
-            realPlay(pictureBox);
-        }
-
-
-        //无窗口参录像
-        public void SaveRecord(string saveFile)
-        {
-            realPlay();
-            startRecord(saveFile);
         }
 
         //抓图BMP
@@ -576,7 +588,6 @@ namespace NVRCsharpDemo
             }
             return sBmpPicFileName;
         }
-
         //抓图JPEG
         public string saveJPEG()
         {

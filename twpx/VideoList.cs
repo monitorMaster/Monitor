@@ -26,16 +26,16 @@ namespace twpx
         public void LoadData()
         {
             listView1.Items.Clear();
-            var list = db.Queryable<Video>().ToList();
+            var list = db.Queryable<Record>().ToList();
             foreach (var i in list)
             {
                 ListViewItem item = new ListViewItem();
-                item.Text = i.Id.ToString();
-                item.SubItems.Add(i.Did.ToString());
-                item.SubItems.Add(i.Name);
-                item.SubItems.Add(i.Time.ToString());
-                item.SubItems.Add(i.Length.ToString());
-                item.SubItems.Add(i.Path);
+                item.Text = i.id.ToString();
+                item.SubItems.Add(i.cid.ToString());
+                item.SubItems.Add(i.cname);
+                item.SubItems.Add(i.date.ToString());
+                item.SubItems.Add(i.path.ToString());
+                item.SubItems.Add(i.filename);
                 listView1.Items.Add(item);
             }
         }

@@ -82,6 +82,12 @@
     <Compile Include="Find.Designer.cs">
       <DependentUpon>Find.cs</DependentUpon>
     </Compile>
+    <Compile Include="FullScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FullScreen.Designer.cs">
+      <DependentUpon>FullScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="VIew\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,7 +108,7 @@
     </Compile>
     <Compile Include="Model\Device.cs" />
     <Compile Include="Model\SadminModel.cs" />
-    <Compile Include="Model\Video.cs" />
+    <Compile Include="Model\Record.cs" />
     <Compile Include="PlayCtrl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Find.resx">
       <DependentUpon>Find.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FullScreen.resx">
+      <DependentUpon>FullScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VIew\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

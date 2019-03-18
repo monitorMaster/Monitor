@@ -32,9 +32,9 @@ namespace twpx
         {
             this.list = new System.Windows.Forms.GroupBox();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Lid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Lname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pictureBox14 = new System.Windows.Forms.PictureBox();
             this.pictureBox13 = new System.Windows.Forms.PictureBox();
@@ -91,9 +91,9 @@ namespace twpx
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ID,
-            this.IP,
-            this.columnHeader1});
+            this.Lid,
+            this.Lname,
+            this.IP});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
@@ -107,19 +107,19 @@ namespace twpx
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
-            // ID
+            // Lid
             // 
-            this.ID.Text = "编号";
-            this.ID.Width = 42;
+            this.Lid.Text = "编号";
+            // 
+            // Lname
+            // 
+            this.Lname.Text = "设备名称";
+            this.Lname.Width = 100;
             // 
             // IP
             // 
-            this.IP.Text = "IP地址";
-            this.IP.Width = 171;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "状态";
+            this.IP.Text = "IP";
+            this.IP.Width = 80;
             // 
             // groupBox1
             // 
@@ -335,9 +335,9 @@ namespace twpx
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(197, 56);
             this.button2.TabIndex = 0;
-            this.button2.Text = "开始/停止录像";
+            this.button2.Text = "开始录像";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click2);
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -406,9 +406,9 @@ namespace twpx
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader Lname;
+        private System.Windows.Forms.ColumnHeader Lid;
         private System.Windows.Forms.ColumnHeader IP;
-        private System.Windows.Forms.ColumnHeader ID;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
         private PictureBox pictureBox14;
         private PictureBox pictureBox13;
         private PictureBox pictureBox12;
