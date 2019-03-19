@@ -52,8 +52,8 @@ namespace twpx
             for(int i=0; i< m; i++)
             {
                 FScommon.Priview(currentCamera, pictureBoxList[i]);
+                FScommon.AddInt(currentCamera);
                 currentCamera = (currentCamera + 1) % a; 
-                FScommon.AddInt(i);
             }
         }
 
