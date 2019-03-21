@@ -23,7 +23,7 @@ namespace twpx
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new LoginForm());
-            Application.Run(new Sysgl());
+            Application.Run(new Jxlgl());
             Pcommon.cleanSDK();//注销SDK
             Pcommon.SaveLog();//保存日志
         }
