@@ -88,11 +88,13 @@
     <Compile Include="FullScreen.Designer.cs">
       <DependentUpon>FullScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="VIew\Form1.cs">
+    <Compile Include="Model\Building.cs" />
+    <Compile Include="Model\Lab.cs" />
+    <Compile Include="VIew\MainPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VIew\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="VIew\MainPage.Designer.cs">
+      <DependentUpon>MainPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Manage1.cs">
       <SubType>Form</SubType>
@@ -106,7 +108,7 @@
     <Compile Include="Manage2.Designer.cs">
       <DependentUpon>Manage2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Device.cs" />
+    <Compile Include="Model\Camera.cs" />
     <Compile Include="Model\SadminModel.cs" />
     <Compile Include="Model\Record.cs" />
     <Compile Include="PlayCtrl.cs" />
@@ -142,6 +144,12 @@
     <Compile Include="VIew\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="VIew\sysgl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VIew\sysgl.designer.cs">
+      <DependentUpon>sysgl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Devices.resx">
       <DependentUpon>Devices.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,8 +159,8 @@
     <EmbeddedResource Include="FullScreen.resx">
       <DependentUpon>FullScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VIew\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="VIew\MainPage.resx">
+      <DependentUpon>MainPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Manage1.resx">
       <DependentUpon>Manage1.cs</DependentUpon>
@@ -184,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VIew\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VIew\sysgl.resx">
+      <DependentUpon>sysgl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

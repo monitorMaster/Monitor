@@ -11,7 +11,7 @@ namespace twpx
 {
     class Common
     {
-        private static List<Camera> CameraList = new List<Camera>();//存储登录设备的链表
+        private static List<NVRCsharpDemo.Camera> CameraList = new List<NVRCsharpDemo.Camera>();//存储登录设备的链表
         private static int[] intList = new int[9]{-1,-1,-1,-1,-1,-1,-1,-1,-1};//存储当前预览设备在链表中的序号
         private static string operateLog = null;//存放日志
         private static string saveDirectory = "C:\\HikVision\\";//文件根目录
@@ -117,7 +117,7 @@ namespace twpx
         //读取设备
         public void LoadData()
         {
-            var list = db.Queryable<Device>().ToList();
+            var list = db.Queryable<Model.Camera>().ToList();
             foreach (var i in list)
             {
                 Console.WriteLine(i.ToString());
@@ -130,7 +130,7 @@ namespace twpx
         }
 
         //获取设备链表
-        public List<Camera> GetCL() { return CameraList;  }
+        public List<NVRCsharpDemo.Camera> GetCL() { return CameraList;  }
         //清空设备链表
         public bool RemoveAll()
         {
@@ -141,7 +141,7 @@ namespace twpx
             return false;
         }
         //添加登录设备
-        public bool AddCL(Camera camera)
+        public bool AddCL(NVRCsharpDemo.Camera camera)
         {
             if (CheckRepeat(camera.getIp()))
             {
@@ -166,7 +166,7 @@ namespace twpx
             {
                 return false;
             }
-            CameraList.Add(new Camera(lid, lname, ip, port, username, password));//添加
+            CameraList.Add(new NVRCsharpDemo.Camera(lid, lname, ip, port, username, password));//添加
             //登录
             if (CameraList[GetCount() - 1].login())
             {

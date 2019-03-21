@@ -13,20 +13,21 @@ namespace twpx.Dao
         {
             get
             {
-                string reval = "server=localhost;uid=root;pwd=Gl@956788752;database=video";
+                string reval = "server=localhost;uid=root;pwd=root;database=monitor";
                 //string reval = "server=123.206.206.93;uid=root;pwd=1997liyiyong;database=video";
                 return reval;
             }
         }
         public static SqlSugarClient GetInstance()
         {
-            SqlSugarClient db = new SqlSugarClient(new ConnectionConfig() {
+            SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
+            {
                 ConnectionString = ConnectionString,
                 DbType = DbType.MySql,
                 IsAutoCloseConnection = true,
                 InitKeyType = InitKeyType.SystemTable
             });
-           
+
             return db;
         }
     }

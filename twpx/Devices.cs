@@ -56,13 +56,13 @@ namespace twpx
             else
             {
                 int selectCount = this.listView1.SelectedItems.Count;
-                Camera camera = null;
+                NVRCsharpDemo.Camera camera = null;
                 for(int i=0; i<selectCount; i++)
                 {
                     ip = this.listView1.SelectedItems[i].SubItems[5].Text;
                     if (ip.Equals("离线"))//如果设备离线就登录
                     {
-                        camera = new Camera(listView1.SelectedItems[i].SubItems[1].Text,//lid
+                        camera = new NVRCsharpDemo.Camera(listView1.SelectedItems[i].SubItems[1].Text,//lid
                             listView1.SelectedItems[i].SubItems[2].Text,//lname
                             listView1.SelectedItems[i].SubItems[3].Text,//ip
                             Convert.ToInt16(listView1.SelectedItems[i].SubItems[4].Text),//port
@@ -131,7 +131,7 @@ namespace twpx
                 MessageBox.Show("选项不能为空！");
                 return;
             }
-            Device device = new Device();
+            Model.Camera device = new Model.Camera();
             device.lid = lid;
             device.lname = lname;
             device.ip = ip;
@@ -163,7 +163,7 @@ namespace twpx
         {
 
             listView1.Items.Clear();
-            var list = db.Queryable<Device>().ToList();
+            var list = db.Queryable<Model.Camera>().ToList();
             foreach (var i in list)
             {
                 ListViewItem item = new ListViewItem();
@@ -204,7 +204,7 @@ namespace twpx
                 {
                     i.Remove();
                 }
-                var t4 = db.Deleteable<Device>().In(ids).ExecuteCommand();
+                var t4 = db.Deleteable<Model.Camera>().In(ids).ExecuteCommand();
                 DebugInfo("移除" + t4 + "个设备。");
             }
         }
