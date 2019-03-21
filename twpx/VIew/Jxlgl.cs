@@ -54,6 +54,7 @@ namespace twpx.VIew
                 result = db.Updateable(building).ExecuteCommand();
             }
             LoadData();
+            clearBlank();
         }
         // 清除信息
         private void clearBlank()

@@ -22,8 +22,8 @@ namespace twpx
             Pcommon.LoadData();//读取设备信息并登录
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new LoginForm());
-            Application.Run(new Jxlgl());
+            Application.Run(new LoginForm());
+            //Application.Run(new Ptglygl());
             Pcommon.cleanSDK();//注销SDK
             Pcommon.SaveLog();//保存日志
         }

@@ -21,12 +21,7 @@ namespace twpx.VIew
         {
             InitializeComponent();
             LoadData();
-            List<String> blist = new List<String>();
-            foreach (Building building in buildings)
-            {
-                blist.Add(building.Name);
-            }
-            comboBox1.DataSource = blist;
+            
         }
 
         private void sysgl_Load(object sender, EventArgs e)
@@ -37,6 +32,12 @@ namespace twpx.VIew
         public void LoadData()
         {
             buildings = db.Queryable<Building>().ToList();
+            List<String> blist = new List<String>();
+            foreach (Building building in buildings)
+            {
+                blist.Add(building.Name);
+            }
+            comboBox1.DataSource = blist;
             listView1.Items.Clear();
             var list = db.Queryable<Lab>().ToList();
             foreach (var i in list)
@@ -71,7 +72,7 @@ namespace twpx.VIew
             }
             
             LoadData();
-            Console.WriteLine(result);
+            clearBlank();
         }
         // 批量删除
         private void button3_Click(object sender, EventArgs e)

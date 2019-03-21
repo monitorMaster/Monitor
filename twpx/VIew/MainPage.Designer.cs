@@ -104,6 +104,7 @@
             this.button5.TabIndex = 6;
             this.button5.Text = "普通管理员管理";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -113,6 +114,7 @@
             this.button6.TabIndex = 7;
             this.button6.Text = "教学楼管理";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 

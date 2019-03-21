@@ -153,5 +153,15 @@ namespace twpx
         {
             new Sysgl().Show();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            new Ptglygl().Show();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            new Jxlgl().Show();
+        }
     }
 }

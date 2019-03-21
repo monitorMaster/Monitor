@@ -187,3 +187,4 @@ C:\Users\FreeeBird\Desktop\创新实践\Monitor\twpx\bin\Google.Protobuf.dll
 C:\Users\FreeeBird\Desktop\创新实践\Monitor\twpx\bin\MySql.Data.xml
 C:\Users\FreeeBird\Desktop\创新实践\Monitor\twpx\obj\Debug\twpx.csproj.CopyComplete
 C:\Users\FreeeBird\Desktop\创新实践\Monitor\twpx\obj\Debug\twpx.VIew.Jxlgl.resources
+C:\Users\FreeeBird\Desktop\创新实践\Monitor\twpx\obj\Debug\twpx.VIew.Ptglygl.resources
